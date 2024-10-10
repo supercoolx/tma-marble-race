@@ -6,6 +6,7 @@ function Go () {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [ton, setTon] = useState(0);
+  const [myCount, setMyCount] = useState(Number(state.count))
   const [room, setRoom] = useState(0);
   const [memberCountInRoom, setMemberCountInRoom] = useState(0);
   const [myIndex, setMyIndex] = useState('');
@@ -30,8 +31,15 @@ function Go () {
     const defaultWidth = 320;
     let cw = window.innerWidth;
     let ratio = cw / defaultWidth;
-    const userIds= ['763843','386343','873902','174942','374834','323233','123323']
-    for (let i = 0 ; i < 100; i++){
+    for (let i = 0 ; i < myCount ; i++){
+      const user = {
+        id: '323233',
+        position: {x:Common.random((cw / 2 - 50), (cw / 2 + 50)), y:Common.random(18*ratio, 100*ratio)},
+      }
+      setUsers((prev) => [...prev, user])
+    }
+    const userIds= ['763843','386343','873902','174942','374834','123323']
+    for (let i = 0 ; i < 100-myCount; i++){
       let flag = true
       let userId
       do{
@@ -78,7 +86,7 @@ function Go () {
                 <div className='bg-[#262A2E] rounded-[6px] py-[10px] px-[20px] flex flex-row items-center gap-1 mt-1'>
                     <div className='w-[15px] h-[15px] rounded-full bg-white'>
                     </div>
-                    <span className='text-[12px] text-white font-bold'>1</span>
+                    <span className='text-[12px] text-white font-bold'>{myCount}</span>
                 </div>
             </div>
             <div className='mt-[36px] pb-[85px]'>

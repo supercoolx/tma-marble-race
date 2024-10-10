@@ -5,10 +5,10 @@ import Footer from '@/components/Footer';
 
 function RubleMenu () {
     const navigate = useNavigate();
-
+    
     const handleNavigate = (price) => (e) => {
         e.preventDefault()
-        navigate('/go',{state:{price}})
+        navigate('/enterCount',{state:{price}})
     }
 
     return(
