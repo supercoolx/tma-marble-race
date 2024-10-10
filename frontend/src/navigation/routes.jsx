@@ -1,26 +1,14 @@
-import Home from '@/pages/Home';
-import Earn from '@/pages/Earn';
-import Invite from '@/pages/Invite';
-import Leaderboard from '@/pages/Leaderboard';
-import Marble from '@/pages/Marble';
-import Boost from '@/pages/Boost';
+import Buy from '@/pages/Buy';
+import Menu from '@/pages/Menu';
+import Game from '@/pages/Game';
+import RubleMenu from '@/pages/RubleMenu';
+import Go from '@/pages/Go';
 
-/**
- * @typedef {object} Route
- * @property {string} path
- * @property {import('react').ComponentType} Component
- * @property {string} [title]
- * @property {import('react').JSX.Element} [icon]
- */
-
-/**
- * @type {Route[]}
- */
 export const routes = [
-  { path: '/', Component: Home },
-  { path: '/earn', Component: Earn },
-  { path: '/invite', Component: Invite },
-  { path: '/leaderboard', Component: Leaderboard },
-  { path: '/marble', Component: Marble },
-  { path: '/boost', Component: Boost },
+  { path: '/', Component: Buy },
+  { path: '/menu', Component: Menu },
+  { path: '/game', Component: Game },
+  { path: '/ruble', Component: RubleMenu },
+  { path: '/go', Component: Go},
+  
 ];

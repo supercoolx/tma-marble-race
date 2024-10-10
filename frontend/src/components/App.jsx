@@ -18,7 +18,6 @@ import {
 } from 'react-router-dom';
 
 import AuthProvider from '@/providers/AuthProvider';
-import Footer from '@/components/Footer';
 import { ToastContainer } from 'react-toastify';
 
 import { routes } from '@/navigation/routes.jsx';
@@ -77,7 +76,6 @@ export function App() {
               {routes.map((route) => <Route key={route.path} {...route} />)}
               <Route path='*' element={<Navigate to='/' />} />
             </Routes>
-            <Footer />
           {/* </div>
         </div> */}
         </AuthProvider>

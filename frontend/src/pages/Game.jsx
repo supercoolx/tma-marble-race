@@ -2,7 +2,7 @@ import Matter, { Engine, Runner, Render, Composite, Composites, Common, Bodies, 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const Game = () => {
+function Game () {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [ton, setTon] = useState()
@@ -154,9 +154,9 @@ const Game = () => {
   const addBallsToWorld = () => {
     const stack = users.map((user, i) => {
       const render = user.id == myIndex ? {
-        sprite: { texture: '/ball.png', xScale: 0.015625*ratio+cw/30000, yScale: 0.015625*ratio+cw/30000 }
+        sprite: { texture: '/imgs/ball.png', xScale: 0.015625*ratio+cw/30000, yScale: 0.015625*ratio+cw/30000 }
       }:{
-        sprite: { texture: '/ball_other.png', xScale: 0.015625*ratio+cw/30000, yScale: 0.015625*ratio+cw/30000 }
+        sprite: { texture: '/imgs/ball_other.png', xScale: 0.015625*ratio+cw/30000, yScale: 0.015625*ratio+cw/30000 }
         // fillStyle: myIndex == i ? '#0000ff' : '#ffffff'
       }
       return Bodies.circle(

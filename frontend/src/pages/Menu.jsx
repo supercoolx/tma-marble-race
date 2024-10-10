@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Common } from 'matter-js'
+import Balance from '@/components/Balance';
+import Footer from '@/components/Footer';
 
-const Menu = () => {
+function Menu () {
   const navigate = useNavigate();
   const [ton, setTon] = useState(0);
   const [room, setRoom] = useState(0);
@@ -21,6 +23,11 @@ const Menu = () => {
   const handlePlayButton = (e) => {
     e.preventDefault();
     navigate('/game',{state:{ton,room,memberCountInRoom,myIndex,users}})
+  }
+
+  const handleRuble = (e) => {
+    e.preventDefault();
+    navigate('/ruble')
   }
 
   const getUsersData = () => {
@@ -46,17 +53,25 @@ const Menu = () => {
   }
 
   return(
-    <div className='bg-[#333] w-full h-[100vh]'>
-      <div className='flex flex-row justify-center gap-3 py-2 px-4'>
-        <div className='w-full flex justify-center p-2 text-white text-lg border-[2px] border-solid border-[#BF4F74] active:border-[#fff] cursor-pointer' onClick={()=>setTon(1)}>1 $TON</div>
-        <div className='w-full flex justify-center p-2 text-white text-lg border-[2px] border-solid border-[#BF4F74] active:border-[#fff] cursor-pointer' onClick={()=>setTon(10)}>10 $TON</div>
-        <div className='w-full flex justify-center p-2 text-white text-lg border-[2px] border-solid border-[#BF4F74] active:border-[#fff] cursor-pointer' onClick={()=>setTon(100)}>100 $TON</div>
-      </div >
-      <div className='flex flex-row justify-center gap-3 py-2 px-4'>
-        <div className='text-[#BF4F74] text-lg m-1 py-1 px-4 border-[2px] border-solid border-[#BF4F74] rounded-sm bg-[#333] cursor-pointer' onClick={handlePlayButton}>Play</div>
-      </div >
+    <div className='flex flex-col'>
+      <Balance/>
+      <div id="body_buy">
+            <div id="header" className='text-center mt-[19px] mb-[15px]'>
+                <span className='font-roboto text-[#fff] text-[18px] font-bold'>Game modes</span>
+            </div>
+            <div className='mx-[26px] grid grid-cols-2 gap-5'>
+                <div className='cursor-pointer inline-block text-center' onClick={handleRuble}>
+                    <img className='w-full rounded-[18.5px] z-10' src="/imgs/game_mode.jpg" alt=''/>
+                </div>
+                <div className='cursor-pointer inline-block'>
+                    <img className='w-full rounded-[18.5px] z-10' src="/imgs/game_mode.jpg" alt=''/>
+                </div>
+            </div>
+        </div>
+        <Footer/>
     </div>
   )
 }
 
 export default Menu;
+

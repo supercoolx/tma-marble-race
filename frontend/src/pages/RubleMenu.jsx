@@ -1,0 +1,85 @@
+import React from 'react';
+import Balance from '@/components/Balance';
+import { useNavigate } from 'react-router-dom';
+import Footer from '@/components/Footer';
+
+function RubleMenu () {
+    const navigate = useNavigate();
+
+    const handleNavigate = (price) => (e) => {
+        e.preventDefault()
+        navigate('/go',{state:{price}})
+    }
+
+    return(
+        <div className='flex flex-col pb-[85px]'>
+            <Balance/>
+            <div id="body_buy">
+                <div id="header" className='text-center mt-[19px] mb-[15px]'>
+                    <span className='font-roboto text-[#fff] text-[18px] font-bold'>Play Marble Ruble</span>
+                </div>
+                <div className='mx-[12px] flex flex-col gap-4'>
+                    <div onClick={handleNavigate(1)} className='flex flex-row gap-12 bg-[#1B1A21] rounded-[11px] px-4 py-[10px] shadow-lg cursor-pointer hover:shadow-cyan-500/50'>
+                        <div className='bg-black border-[#8102FF] border-[2px] rounded-[281px] w-[82px] h-[82px]'>
+                        </div>
+                        <div className='flex flex-col justify-center'>
+                            <span className='text-[11.5px] text-[#6E6E6E]'>Price 1 Marble</span>
+                            <div className='flex flex-row justify-center items-center mt-2'>
+                                <img className='w-[13px] h-[13px]' src="/imgs/marble_ball.webp" alt=''/>
+                                <span className='text-[15px] text-[#fff] ml-1 font-bold'>1</span>
+                            </div>
+                        </div>
+                        <div className='flex flex-col justify-center'>
+                            <span className='text-[11.5px] text-[#6E6E6E]'>Winner Prize</span>
+                            <div className='flex flex-row justify-center items-center mt-2'>
+                                <img className='w-[13px] h-[13px]' src="/imgs/marble_ball.webp" alt=''/>
+                                <span className='text-[15px] text-[#fff] ml-1 font-bold'>100</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div onClick={handleNavigate(10)} className='flex flex-row gap-12 bg-[#1B1A21] rounded-[11px] px-4 py-[10px] shadow-lg cursor-pointer hover:shadow-cyan-500/50'>
+                        <div className='bg-black border-[#8102FF] border-[2px] rounded-[281px] w-[82px] h-[82px]'>
+                        </div>
+                        <div className='flex flex-col justify-center'>
+                            <span className='text-[11.5px] text-[#6E6E6E]'>Price 1 Marble</span>
+                            <div className='flex flex-row justify-center items-center mt-2'>
+                                <img className='w-[13px] h-[13px]' src="/imgs/marble_ball.webp" alt=''/>
+                                <span className='text-[15px] text-[#fff] ml-1 font-bold'>10</span>
+                            </div>
+                        </div>
+                        <div className='flex flex-col justify-center'>
+                            <span className='text-[11.5px] text-[#6E6E6E]'>Winner Prize</span>
+                            <div className='flex flex-row justify-center items-center mt-2'>
+                                <img className='w-[13px] h-[13px]' src="/imgs/marble_ball.webp" alt=''/>
+                                <span className='text-[15px] text-[#fff] ml-1 font-bold'>1,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div onClick={handleNavigate(100)} className='flex flex-row gap-12 bg-[#1B1A21] rounded-[11px] px-4 py-[10px] shadow-lg cursor-pointer hover:shadow-cyan-500/50'>
+                        <div className='bg-black border-[#8102FF] border-[2px] rounded-[281px] w-[82px] h-[82px]'>
+                        </div>
+                        <div className='flex flex-col justify-center'>
+                            <span className='text-[11.5px] text-[#6E6E6E]'>Price 1 Marble</span>
+                            <div className='flex flex-row justify-center items-center mt-2'>
+                                <img className='w-[13px] h-[13px]' src="/imgs/marble_ball.webp" alt=''/>
+                                <span className='text-[15px] text-[#fff] ml-1 font-bold'>100</span>
+                            </div>
+                        </div>
+                        <div className='flex flex-col justify-center'>
+                            <span className='text-[11.5px] text-[#6E6E6E]'>Winner Prize</span>
+                            <div className='flex flex-row justify-center items-center mt-2'>
+                                <img className='w-[13px] h-[13px]' src="/imgs/marble_ball.webp" alt=''/>
+                                <span className='text-[15px] text-[#fff] ml-1 font-bold'>10,000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <Footer/>
+        </div>
+    )
+}
+
+export default RubleMenu;

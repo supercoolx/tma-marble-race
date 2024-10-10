@@ -17,7 +17,7 @@ html {
 body {
   min-height: 100vh;
   background: linear-gradient(145deg, rgba(31,28,53,1) 0%, rgba(14,13,20,1) 100%);
-  padding-bottom: 60px;
+  /* padding-bottom: 80px; */
   color: white;
   -webkit-user-select: none;
   -khtml-user-select: none;
