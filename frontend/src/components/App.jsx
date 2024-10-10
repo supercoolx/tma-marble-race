@@ -66,11 +66,20 @@ export function App() {
     >
       <Router location={location} navigator={reactNavigator}>
         <AuthProvider>
-          <Routes>
-            {routes.map((route) => <Route key={route.path} {...route} />)}
-            <Route path='*' element={<Navigate to='/' />} />
-          </Routes>
-          <Footer />
+        {/* <div className="h-[100vh] bg-gradient-to-tl from-[#000] to-[#2E2856] pb-[20px]">
+          <div className='flex flex-row justify-center items-center gap-2 py-[11px]'>
+                <img className='w-[17px] h-[17px]' src="/imgs/marble_ball.webp" alt=''/>
+                <span className='text-[16.7px] font-normal text-[#fff]'>Marble Mania</span>
+                <img className='w-[17px] h-[17px]' src="/imgs/marble_ball.webp" alt=''/>
+          </div>
+          <div className='flex flex-col bg-gradient-to-br from-[#1F1C35] to-[#0E0D14] mb-[7px] mx-[8px] rounded-[30px] border-[#0F0E15] border-solid border-2'> */}
+            <Routes>
+              {routes.map((route) => <Route key={route.path} {...route} />)}
+              <Route path='*' element={<Navigate to='/' />} />
+            </Routes>
+            <Footer />
+          {/* </div>
+        </div> */}
         </AuthProvider>
       </Router>
       <ToastContainer position="top-center" autoClose={3000} theme="dark" />
