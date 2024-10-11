@@ -10,6 +10,5 @@ export const routes = [
   { path: '/menu', Component: Menu },
   { path: '/game', Component: Game },
   { path: '/ruble', Component: RubleMenu },
-  { path: '/go', Component: Go},
   { path: '/enterCount', Component: EnterCount },
 ];

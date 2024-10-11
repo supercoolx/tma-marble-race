@@ -33,8 +33,8 @@ function Game () {
   },[state])
 
   useEffect(() => {
+    console.log(users)
     if (users.length == 100){
-      console.log(users)
       renderSetup()
     
       return () => {

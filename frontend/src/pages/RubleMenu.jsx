@@ -19,7 +19,7 @@ function RubleMenu () {
                     <span className='font-roboto text-[#fff] text-[18px] font-bold'>Play Marble Ruble</span>
                 </div>
                 <div className='mx-[12px] flex flex-col gap-4'>
-                    <div onClick={handleNavigate(1)} className='flex flex-row gap-12 bg-[#1B1A21] rounded-[11px] px-4 py-[10px] shadow-lg cursor-pointer hover:shadow-cyan-500/50'>
+                    <div onClick={handleNavigate(1)} className='flex flex-row gap-12 bg-[#1B1A21] rounded-[11px] px-4 py-[10px] cursor-pointer'>
                         <div className='bg-black border-[#8102FF] border-[2px] rounded-[281px] w-[82px] h-[82px]'>
                         </div>
                         <div className='flex flex-col justify-center'>
@@ -38,7 +38,7 @@ function RubleMenu () {
                         </div>
                     </div>
 
-                    <div onClick={handleNavigate(10)} className='flex flex-row gap-12 bg-[#1B1A21] rounded-[11px] px-4 py-[10px] shadow-lg cursor-pointer hover:shadow-cyan-500/50'>
+                    <div onClick={handleNavigate(10)} className='flex flex-row gap-12 bg-[#1B1A21] rounded-[11px] px-4 py-[10px] cursor-pointer'>
                         <div className='bg-black border-[#8102FF] border-[2px] rounded-[281px] w-[82px] h-[82px]'>
                         </div>
                         <div className='flex flex-col justify-center'>
@@ -57,7 +57,7 @@ function RubleMenu () {
                         </div>
                     </div>
 
-                    <div onClick={handleNavigate(100)} className='flex flex-row gap-12 bg-[#1B1A21] rounded-[11px] px-4 py-[10px] shadow-lg cursor-pointer hover:shadow-cyan-500/50'>
+                    <div onClick={handleNavigate(100)} className='flex flex-row gap-12 bg-[#1B1A21] rounded-[11px] px-4 py-[10px] cursor-pointer'>
                         <div className='bg-black border-[#8102FF] border-[2px] rounded-[281px] w-[82px] h-[82px]'>
                         </div>
                         <div className='flex flex-col justify-center'>
