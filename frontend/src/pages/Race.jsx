@@ -134,7 +134,7 @@ function Race () {
     loadSvg(svg).then(function(root) {
       var vertexSets = select(root, 'path')
           .map(function(path) { 
-            return Vertices.scale(Svg.pathToVertices(path, 30),0.1,-0.1)
+            return Vertices.scale(Svg.pathToVertices(path, 30),0.1*ratio,-0.1*ratio)
           });
       const body = Bodies.fromVertices(x,y, vertexSets[0], {
         label: 'wall',
@@ -227,10 +227,10 @@ function Race () {
 
     var triangleVertices1 = [
       { x: 275*ratio, y: 76*ratio }, // Top point
-      { x: 255 * ratio, y: 85*ratio }, // Left point
-      { x:  295 * ratio, y: 85 * ratio }  // Right point
+      { x: 256.5 * ratio, y: 85*ratio }, // Left point
+      { x:  298 * ratio, y: 85 * ratio }  // Right point
     ];
-    add(Bodies.fromVertices(275*ratio,80.5*ratio,triangleVertices1,{
+    add(Bodies.fromVertices(276.5*ratio,80.5*ratio,triangleVertices1,{
       isStatic:true,
       render: {
           fillStyle: '#8102FF',
