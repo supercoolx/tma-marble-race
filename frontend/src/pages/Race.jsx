@@ -1,4 +1,4 @@
-import Matter, { Engine, Runner, Render, Composite, Composites, Common, Bodies, Body, Vertices, Svg, Constraint, Mouse, MouseConstraint } from 'matter-js'
+import Matter, { Engine, Runner, Render, Composite, Composites, Common, Bodies, Body, Vertices, Svg, Constraint, Mouse, MouseConstraint, Events } from 'matter-js'
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import 'pathseg/pathseg';
@@ -23,7 +23,7 @@ function Race () {
   let ch = defaultHeight * ratio
   
   let render;
-  let rank = [];
+  const [rank, setRank] = useState([])
 
   useEffect(()=>{
     setTon(Number(1))//setTon(Number(state.ton || 1))
@@ -58,6 +58,12 @@ function Race () {
     }
   },[users])
 
+  useEffect(()=> {
+    if (rank.length == 5){
+      setWinner(rank[0].userId)
+    }
+  },[rank])
+
   const renderSetup = () => {
     render = Render.create({
       element: scene.current,
@@ -85,6 +91,27 @@ function Race () {
     else
       engine.current.gravity.scale = 0
     handleCollisionEvent()
+    // Create a mouse constraint
+    const mouse = Mouse.create(render.canvas);
+    const mouseConstraint = MouseConstraint.create(engine.current, {
+      mouse: mouse,
+      constraint: {
+        render: {
+          visible: false
+        }
+      }
+    });
+    
+    add(mouseConstraint);
+    render.mouse = mouse
+    
+    
+    Events.on(mouseConstraint, 'mousedown', (event) => {
+        const mousePosition = event.mouse.position;
+        console.log('Mouse click at:', mousePosition);
+        //283*ratio, 556*ratio, 146*ratio, 15*ratio
+
+    });
     var allBodies = Composite.allBodies(world);
     for (var i = 0; i < allBodies.length; i += 1) {
       allBodies[i].plugin.wrap = {
@@ -299,6 +326,7 @@ function Race () {
    
     const final = Bodies.rectangle(283*ratio, 556*ratio, 146*ratio, 15*ratio, {label: 'dead', isStatic: true,density: 0.8, restitution: 0.6, render:{sprite: {texture: '/imgs/final.png', xScale: ratio, yScale: ratio}}, collisionFilter: {mask: 0x001}})
     add(final)
+    
   };
 
   const add = (body) => {
@@ -314,6 +342,7 @@ function Race () {
         {
           label: "ball",
           index: i,
+          color: user.color,
           userId:user.id,
           friction: 0.0001,
           density: 0.3,
@@ -325,6 +354,7 @@ function Race () {
       )
     );
     add(stack);
+    console.log(stack)
   };
 
   const handleCollisionEvent = () => {
@@ -336,10 +366,8 @@ function Race () {
 
         if (ball && dead) {
           Composite.remove(world, ball);
-          rank.push(ball.index)
-          if (rank.length == 5){
-            setWinner(ball.userId)
-          }
+          setRank((prev) => [...prev,ball])
+          
           // if (ball.index == myIndex){
           //   setMyRank(100-rank.length + 1)
           // }
@@ -382,10 +410,18 @@ function Race () {
           <h5 style={{margin:'6px 0px'}}>Members: {memberCountInRoom}</h5>
         </div>
         <div  className='text-[#BF4F74] text-lg m-1 py-1 px-4 border-[2px] border-solid border-[#BF4F74] rounded-sm bg-[#333] cursor-pointer' onClick={handleMenuButton} style={{position: 'absolute', top: '10px', right: '12px'}}>Menu</div>
-        {winner != '' && (
-          <div style={{position: 'absolute', top: ch / 2 - 88, color: 'white', width: '100%'}}>
+        {/*<div style={{position: 'absolute', top: ch / 2 - 88, color: 'white', width: '100%'}}>
             <h1 style={{textAlign:'center', fontSize: '2.5rem'}}>Finished</h1>
             <h2 style={{textAlign:'center', fontSize: '2rem'}}>The winner is {winner}</h2>
+
+          </div>*/}
+          {winner!='' && console.log(rank)}
+        {winner != '' && (
+          <div style={{position: 'absolute', left:'25%', top: ch / 2 - 88, color: 'white', width: '50%'}} className='z-100 flex flex-col gap-3 items-center align-middle justify-center bg-slate-700 opacity-40 p-3 rounded-lg'>
+            {rank.map((bal) => {
+              console.log(bal)
+              return (<div className={`w-[11px] h-[11px] rounded-full`} style={{backgroundColor: bal.color}}></div>)
+            })}
           </div>
         )}
       </div>
