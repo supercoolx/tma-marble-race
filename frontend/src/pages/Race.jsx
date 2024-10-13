@@ -207,12 +207,12 @@ function Race () {
     drawSVG(79*ratio,223*ratio,"/imgs/star3.svg",30*deg,0.012,0.2*ratio)
     drawSVG(79*ratio,334*ratio,"/imgs/star3.svg",60*deg,0.009,0.2*ratio)
     drawSVG(75*ratio,509*ratio,"/imgs/cross.svg",0,-0.01)
-    drawSVG(240*ratio,119*ratio,"/imgs/star3.svg",20*deg,0.013,0.13*ratio)
-    drawSVG(314*ratio,119*ratio,"/imgs/star3.svg",60*deg,0.016,0.13*ratio)
-    drawSVG(240*ratio,188*ratio,"/imgs/star3.svg",80*deg,0.014,0.13*ratio)
-    drawSVG(314*ratio,188*ratio,"/imgs/star3.svg",30*deg,0.017,0.13*ratio)
-    drawSVG(240*ratio,258*ratio,"/imgs/star3.svg",10*deg,0.01,0.13*ratio)
-    drawSVG(314*ratio,258*ratio,"/imgs/star3.svg",21*deg,0.013,0.13*ratio)
+    drawSVG(240*ratio,119*ratio,"/imgs/star3.svg",20*deg,0.013,0.141*ratio)
+    drawSVG(314*ratio,119*ratio,"/imgs/star3.svg",60*deg,0.016,0.141*ratio)
+    drawSVG(240*ratio,188*ratio,"/imgs/star3.svg",80*deg,0.014,0.141*ratio)
+    drawSVG(314*ratio,188*ratio,"/imgs/star3.svg",30*deg,0.017,0.141*ratio)
+    drawSVG(240*ratio,258*ratio,"/imgs/star3.svg",10*deg,0.01,0.141*ratio)
+    drawSVG(314*ratio,258*ratio,"/imgs/star3.svg",21*deg,0.013,0.141*ratio)
     drawSVG(305.5*ratio,362*ratio,"/imgs/cross.svg",0,-0.018)
     drawSVG(278*ratio,497*ratio,"/imgs/cross.svg",30*deg,0.03)
     createHalfCircle(79*ratio, 223*ratio, 54*ratio, 400, 90*deg);
@@ -272,7 +272,7 @@ function Race () {
           lineWidth: 2
       }
     }))
-    const elevator = Bodies.rectangle(184*ratio,ch-20*ratio,28*ratio,40*ratio,wallOptions)
+    const elevator = Bodies.rectangle(184*ratio,ch-20*ratio,38*ratio,40*ratio,wallOptions)
     const door = Bodies.rectangle(165*ratio,ch-40*ratio,10*ratio,80*ratio,wallOptionsBlack)
     setInterval(() => {
         const { y } = elevator.position;
