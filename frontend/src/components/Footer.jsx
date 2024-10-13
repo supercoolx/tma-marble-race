@@ -8,6 +8,16 @@ export default function Footer() {
         <div className="flex flex-row justify-center">
             <div className="flex fixed bottom-2 flex-row justify-between px-[37px] bg-[#1B1A21] py-[13px] rounded-[21.4px] w-[96%]">
                 <div className="flex flex-col items-center justify-start">
+                    <Link to="/menu" className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-transform duration-300`}>
+                        <svg className="w-[24px] h-[24px]" fill="#979797" preserveAspectRatio="xMidYMid meet" data-bbox="27.5 28 145 144.001" viewBox="27.5 28 145 144.001" height="200" width="200" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" aria-hidden="true" aria-label="">
+                            <g>
+                                <path d="M105.937 30.262a8.923 8.923 0 0 0-11.875 0L30.495 86.986c-2.79 2.492-3.732 6.356-2.395 9.844 1.337 3.488 4.608 5.745 8.335 5.745h9.831v60.501c0 4.922 4.002 8.925 8.922 8.925h31.055c4.79 0 8.686-3.897 8.686-8.689v-24.898h12.197v24.898c0 4.792 3.896 8.689 8.681 8.689h29.006c4.92 0 8.922-4.003 8.922-8.925v-60.501h9.831c3.727 0 6.998-2.256 8.335-5.745 1.337-3.488.394-7.351-2.395-9.844l-63.569-56.724zm4.545 96.109H91.571c-4.786 0-8.681 3.897-8.681 8.689v24.898H58.304V90.532H44.611l55.387-49.425 55.392 49.425h-13.693v69.425h-22.533V135.06c0-4.792-3.896-8.689-8.682-8.689z" data-color="1"></path>
+                            </g>
+                        </svg>
+                    </Link>
+                    <div className="text-[12px] font-manrope font-medium leading-none text-center text-[#C2C2C2] mt-[7px]">Home</div>
+                </div>
+                <div className="flex flex-col items-center justify-start">
                     <Link to="/home" className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-transform duration-300`}>
                         <svg className="w-[24px] h-[24px]" fill="#979797" preserveAspectRatio="xMidYMid meet" data-bbox="10 25 180 150" viewBox="10 25 180 150" height="200" width="200" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" aria-hidden="true" aria-label="">
                             <g>
@@ -21,7 +31,7 @@ export default function Footer() {
                     <div className="text-[12px] font-manrope font-medium leading-none text-center text-[#C2C2C2] mt-[7px]">Buy</div>
                 </div>
                 <div className="flex flex-col items-center justify-start">
-                    <Link to="/menu" className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-transform duration-300`}>
+                    <Link to="/home" className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-transform duration-300`}>
                         <svg className="w-[18px] h-[16px]" fill="#979797" preserveAspectRatio="xMidYMid meet" data-bbox="20 30.5 160 139" viewBox="20 30.5 160 139" height="200" width="200" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" aria-hidden="true" aria-label="">
                             <g>
                                 <path d="M180 91.9h-10.7v-40h-14.9l-5.2-21.4H20v139h149.3v-40.1H180V91.9zM33.6 44h104.9l1.9 7.9H33.6V44zm122.1 112H33.6V65.5h122.1V92h-34.4v37.5h34.4V156zm10.7-40.1h-31.6v-10.4h31.6v10.4z" data-color="1"></path>

@@ -9,6 +9,7 @@ function Game () {
   const [room, setRoom] = useState()
   const [memberCountInRoom, setMemberCountInRoom] = useState()
   const [myIndex, setMyIndex] = useState()
+  const [myCount, setMyCount] = useState()
   const [users, setUsers] = useState([])
   const [winner, setWinner] = useState('')
   const scene = useRef()
@@ -23,17 +24,19 @@ function Game () {
   
   let render;
   let rank = [];
+  let temp = 0;
 
   useEffect(()=>{
     setTon(Number(state.ton || 1))
     setRoom(Number(state.room || 0))
     setMemberCountInRoom(Number(state.memberCountInRoom || 0))
     setMyIndex(state.myIndex)
+    setMyCount(state.myCount)
     setUsers(state.users || [])
+    temp=0
   },[state])
 
   useEffect(() => {
-    console.log(users)
     if (users.length == 100){
       renderSetup()
     
@@ -266,12 +269,15 @@ function Game () {
         if (ball && dead) {
           Composite.remove(world, ball);
           rank.push(ball.index)
-          if (rank.length == 100){
-            setWinner(ball.userId)
+          if (ball.userId == myIndex){
+            temp++;
           }
-          // if (ball.index == myIndex){
-          //   setMyRank(100-rank.length + 1)
-          // }
+          if (temp == myCount){
+            if(rank.length == 100){
+              setWinner('You won!')
+            }
+            setWinner('You Lose!')
+          }
         }
       });
     });
@@ -314,7 +320,7 @@ function Game () {
         {winner != '' && (
           <div style={{position: 'absolute', top: ch / 2 - 88, color: 'white', width: '100%'}}>
             <h1 style={{textAlign:'center', fontSize: '2.5rem'}}>Finished</h1>
-            <h2 style={{textAlign:'center', fontSize: '2rem'}}>The winner is {winner}</h2>
+            <h2 style={{textAlign:'center', fontSize: '2rem'}}>{winner}</h2>
           </div>
         )}
       </div>

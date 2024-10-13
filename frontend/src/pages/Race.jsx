@@ -273,7 +273,7 @@ function Race () {
       Bodies.rectangle(165*ratio,256*ratio,10*ratio,512*ratio,wallOptionsBlack),
       Bodies.rectangle(85*ratio,603*ratio,170*ratio,100*ratio,wallOptionsBlack),
       Bodies.rectangle(202*ratio,348*ratio,10*ratio,600*ratio,wallOptionsBlack),
-      Bodies.rectangle(283*ratio, 556*ratio, 146*ratio, 32*ratio, {label: 'dead', isStatic: true,density: 0.8, restitution: 0.6, render:{fillStyle: '#fff'}, collisionFilter: {mask: 0x001}}),
+      Bodies.rectangle(283*ratio, 556*ratio, 146*ratio, 15*ratio, {label: 'dead', isStatic: true,density: 0.8, restitution: 0.6, render:{sprite: {texture: '/imgs/final.png', xScale: ratio, yScale: ratio}}, collisionFilter: {mask: 0x001}}),
     ])
   };
 

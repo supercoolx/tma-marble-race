@@ -26,7 +26,7 @@ function EnterCount () {
 
     useEffect(() => {
         if (users.length == 100){
-            navigate('/game',{state:{ton,room,memberCountInRoom,myIndex,users}})
+            navigate('/game',{state:{ton,room,memberCountInRoom,myIndex,myCount:count,users}})
         }
     },[users])
     const handlePlayButton = (e) => {
