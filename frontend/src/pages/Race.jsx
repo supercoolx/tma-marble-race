@@ -241,9 +241,9 @@ function Race () {
     var triangleVertices1 = [
       { x: 180*ratio, y: 0*ratio }, // Top point
       { x: 212 * ratio, y: 0*ratio }, // Left point
-      { x:  180 * ratio, y: 3 * ratio }  // Right point
+      { x:  180 * ratio, y: 5 * ratio }  // Right point
     ];
-    add(Bodies.fromVertices(180*ratio,1.5*ratio,triangleVertices1,{
+    add(Bodies.fromVertices(180*ratio,2.5*ratio,triangleVertices1,{
       isStatic:true,
       render: {
           fillStyle: '#111',
