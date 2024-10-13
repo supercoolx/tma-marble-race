@@ -110,7 +110,7 @@ function Race () {
             (start.x + end.x) / 2,
             (start.y + end.y) / 2,
             Math.abs(end.x - start.x),
-            3,
+            1,
             { 
               isStatic: true,
               angle: Math.atan2(end.y - start.y, end.x - start.x),
@@ -205,14 +205,14 @@ function Race () {
     const wall13 = Bodies.rectangle(327*ratio, 481.5*ratio,72*ratio,3*ratio,wallOptions)
     Body.rotate(wall13,-23*deg)
     drawSVG(79*ratio,223*ratio,"/imgs/star3.svg",30*deg,0.012,0.2*ratio)
-    drawSVG(79*ratio,334*ratio,"/imgs/star3.svg",60*deg,0.009,0.2*ratio)
+    drawSVG(79*ratio,334*ratio,"/imgs/star3.svg",60*deg,0.009,0.225*ratio)
     drawSVG(75*ratio,509*ratio,"/imgs/cross.svg",0,-0.01)
-    drawSVG(240*ratio,119*ratio,"/imgs/star3.svg",20*deg,0.013,0.141*ratio)
-    drawSVG(314*ratio,119*ratio,"/imgs/star3.svg",60*deg,0.016,0.141*ratio)
-    drawSVG(240*ratio,188*ratio,"/imgs/star3.svg",80*deg,0.014,0.141*ratio)
-    drawSVG(314*ratio,188*ratio,"/imgs/star3.svg",30*deg,0.017,0.141*ratio)
-    drawSVG(240*ratio,258*ratio,"/imgs/star3.svg",10*deg,0.01,0.141*ratio)
-    drawSVG(314*ratio,258*ratio,"/imgs/star3.svg",21*deg,0.013,0.141*ratio)
+    drawSVG(240*ratio,119*ratio,"/imgs/star3.svg",20*deg,0.013,0.15*ratio)
+    drawSVG(314*ratio,119*ratio,"/imgs/star3.svg",60*deg,0.016,0.15*ratio)
+    drawSVG(240*ratio,188*ratio,"/imgs/star3.svg",80*deg,0.014,0.15*ratio)
+    drawSVG(314*ratio,188*ratio,"/imgs/star3.svg",30*deg,0.017,0.15*ratio)
+    drawSVG(240*ratio,258*ratio,"/imgs/star3.svg",10*deg,0.01,0.15*ratio)
+    drawSVG(314*ratio,258*ratio,"/imgs/star3.svg",21*deg,0.013,0.15*ratio)
     drawSVG(305.5*ratio,362*ratio,"/imgs/cross.svg",0,-0.018)
     drawSVG(278*ratio,497*ratio,"/imgs/cross.svg",30*deg,0.03)
     createHalfCircle(79*ratio, 223*ratio, 54*ratio, 400, 90*deg);
