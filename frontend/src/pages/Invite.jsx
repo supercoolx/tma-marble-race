@@ -3,13 +3,14 @@ import { useInitData, useUtils } from "@telegram-apps/sdk-react";
 import { LINK } from "@/libs/constants";
 import API from "@/libs/api";
 import Avatar from '@/components/Avatar';
+import Balance from '@/components/Balance';
+import Footer from '@/components/Footer';
 
 export default function Invite() {
     const { user } = useInitData();
     const utils = useUtils();
     const [friends, setFriends] = useState([]);
     const [token, setToken] = useState();
-    const [onion, setOnion] = useState();
     useEffect(() => {
         API.get('/users/friends/' + user.id)
             .then(res => {
@@ -18,7 +19,6 @@ export default function Invite() {
         API.get(`/users/get/${user.id}`)
             .then(res => {
                 setToken(res.data.token);
-                setOnion(res.data.onion);
             })
     }, [user]);
 
@@ -39,66 +39,43 @@ export default function Invite() {
     }
 
     return (
-        <div className="pt-[34px] px-[31px] pb-[40px] bg-[url('/imgs/background.png'),linear-gradient(to_bottom,#E3F5FC,#90D6F3)] bg-cover bg-center">
-            <div className="flex justify-center">
-                <img src="/imgs/invite.png" width={180} height={180} alt="" />
-            </div>
-            <h1 className="mt-[6px] font-caveat font-bold text-[28px] leading-[42px] text-primary text-center">Invite Friend & Earn</h1>
-            <div className="mt-[10px] w-[275px] h-[52px] border-[0.5px] border-primary rounded-[7px] mx-auto border-opacity-45 flex justify-evenly">
-                <div className="flex items-center gap-[9px]">
-                    <img src="/imgs/user.svg" width={23} height={23} alt="" />
-                    <div className="font-poppins font-bold text-[11px]">
-                        <div className="">Regular Users</div>
-                        <div className="text-primary mt-[2px]">100 Marble</div>
+        <div className='flex flex-col pb-[85px]'>
+            <Balance/>
+            <div id="body_friends">
+                <div id="header" className='text-center mt-[19px]'>
+                    <span className='font-roboto text-[#fff] text-[18px] font-bold'>Become a Referral</span>
+                </div>
+                <div id="sub_header" className='text-center mt-[8px] mb-[28px]'>
+                    <span className='font-roboto text-[#fff] text-[14.2px] font-bold'>and get 10% of all your friends'</span>
+                    <span className='font-roboto text-[#fff] text-[14.2px] font-bold'>purchases as a bonus!</span>
+                </div>
+                <div className='mx-[12px] flex flex-col'>
+                    <span className='font-roboto text-white text-[11.3px] font-bold'>Your referral link:</span>
+                    <div className='flex flex-col bg-[#1B1A21] rounded-[11px] px-4 py-[10px] mt-1'>
+                        <div className='flex flex-row justify-between items-center'>
+                            <span className='font-roboto text-[11.5px] text-white font-bold'>url</span>
+                            <div className='px-[16px] py-[4px] text-center flex flex-row items-center border-[#8102FF] rounded-[5px] border-[1px]'>
+                                <span className='font-roboto text-[11.4px] text-white font-bold'>Copy</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="flex items-center gap-[9px]">
-                    <img src="/imgs/user-premium.svg" width={23} height={23} alt="" />
-                    <div className="font-poppins font-bold text-[11px]">
-                        <div className="">Premium Users</div>
-                        <div className="text-primary mt-[2px]">200 Marble</div>
-                    </div>
-                </div>
-            </div>
-            <div className="mt-[23px]">
-                <h2 className="font-caveat font-medium text-[25px] leading-[20px]">Earned</h2>
-                <div className="mt-[8px] py-[8px] rounded-[12px] flex justify-around bg-[#39BDFFA3] font-roboto">
-                    { token !== null && <div className="flex items-center gap-[6px]">
-                        <img src="/imgs/coin.svg" width={24} height={24} alt="" />
-                        <span className="front-bold text-[16px]">{token?.toLocaleString()}</span>
-                    </div> }
-                    { onion !== null && <div className="flex items-center gap-[6px]">
-                        <img src="/imgs/token.png" width={21} height={23} alt="" />
-                        <span className="front-bold text-[16px]">{onion?.toLocaleString()}</span>
-                    </div> }
-                </div>
-            </div>
-            <div className="mt-[23px] flex justify-center gap-[13px]">
-                <button onClick={handleClickInviteLink} className="w-[195px] h-[36px] rounded-[5px] bg-white text-[#64DDFF] outline outline-1 outline-offset-1 outline-transparent hover:outline-white transition-all duration-300 text-[12px] font-inter font-medium">Invite a Friend</button>
-                <button onClick={handleInviteLinkCopyButton} className="w-[90px] h-[36px] rounded-[4px] bg-primary outline outline-1 outline-offset-1 hover:outline-primary active:outline-transparent outline-transparent transition-all duration-300 flex items-center justify-center gap-[5px] font-inter text-[12px]">
-                    <img src="/imgs/link.svg" width={16} height={16} alt="" />
-                    <span id="copy_button_text">Copy</span>
-                </button>
-            </div>
-            <div className="relative mt-[38px]">
-                <img className="absolute h-[95px] right-0 top-0 -translate-y-[50px] translate-x-[30px]" src="/imgs/print.png" alt="" />
-                <h2 className="font-caveat font-medium text-[25px] leading-[22px]">List of your friends</h2>
-                <div className="mt-[10px] h-[174px] bg-white/10 rounded-[10px] shadow-[0_0_30px_#98D1FF33] overflow-y-scroll flex flex-col gap-2 p-2">
-                    {
-                        friends.map((friend, key) => <div key={key} className="flex items-center gap-2 px-3 py-2 bg-white font-inter text-secondary rounded-[8px]">
-                            <Avatar userid={friend.userid} width={35} height={35} username={friend?.username} />
-                            <div className="flex flex-col justify-between flex-1">
-                                <div className="flex text-[12px] items-center">
-                                    <span className="flex-1 overflow-hidden overflow-ellipsis whitespace-nowrap">{friend.firstname + ''}</span>
-                                    <img src="/imgs/token.png" width={9} height={10} className="mr-[5px] ml-[5px]" alt="" />
-                                    <span className="font-semibold text-primary">{ friend.onion }</span>
+                <div className='mx-[12px] flex flex-col mt-2'>
+                    <span className='font-roboto text-white text-[11.3px] font-bold'>Your free marbles:</span>
+                    {friends.map((friend) => (
+                        <div className='flex flex-col bg-[#1B1A21] rounded-[11px] px-4 py-[10px] mt-1'>
+                            <div className='flex flex-row justify-between items-center'>
+                                <span className='font-roboto text-[11.5px] text-white font-bold'>{friends.username}</span>
+                                <div className='px-[16px] py-[4px] text-center flex flex-row gap-1 items-center'>
+                                    <img className='w-[13px] h-[13px]' src="/imgs/marble_ball.webp" alt=''/>
+                                    <span className='font-roboto font-bold text-[11.3px]'>100</span>
                                 </div>
                             </div>
-                        </div>)
-                    }
-                    { !friends.length && <p className="pt-[50px] font-inter text-[14px] text-center">You haven’t invited anyone yet</p> }
+                        </div>    
+                    ))}
                 </div>
             </div>
+            <Footer/>
         </div>
     )
 }

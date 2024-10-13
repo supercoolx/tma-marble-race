@@ -5,6 +5,7 @@ import RubleMenu from '@/pages/RubleMenu';
 import Go from '@/pages/Go';
 import EnterCount from '@/pages/EnterCount';
 import Race from '@/pages/Race';
+import Invite from '@/pages/Invite';
 
 export const routes = [
   { path: '/', Component: Buy },
@@ -13,4 +14,5 @@ export const routes = [
   { path: '/ruble', Component: RubleMenu },
   { path: '/enterCount', Component: EnterCount },
   { path: '/race', Component: Race},
+  { path: '/friend', Component: Invite}
 ];

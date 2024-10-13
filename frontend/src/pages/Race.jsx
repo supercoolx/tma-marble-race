@@ -1,4 +1,4 @@
-import Matter, { Engine, Runner, Render, Composite, Composites, Common, Bodies, Body, Vertices, Svg } from 'matter-js'
+import Matter, { Engine, Runner, Render, Composite, Composites, Common, Bodies, Body, Vertices, Svg, Constraint, Mouse, MouseConstraint } from 'matter-js'
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import 'pathseg/pathseg';
@@ -32,10 +32,11 @@ function Race () {
     setMyIndex(2)//setMyIndex(state.myIndex)
     const userIds= ['763843','386343','873902','174942','374834']
     const colors = ['#ffd700', '#e43292','#ff6b00','#2cca36', '#ff0219']
+    const startIndex = Common.random(0,4)
     userIds.map((user, index) => {
       const x = 23.5 + 11*index + 15 * index
       const y = 21.5
-      setUsers(prev => [...prev,{id:user, position:{x,y}, color:colors[index]}])
+      setUsers(prev => [...prev,{id:user, position:{x,y}, color:colors[(startIndex + index) % 5]}])
     })
   },[state])
 
@@ -80,7 +81,7 @@ function Race () {
     drawWorld()
     addBallsToWorld()
     if (memberCountInRoom == 5)
-      engine.current.gravity.scale = 0.0004
+      engine.current.gravity.scale = 0.0006
     else
       engine.current.gravity.scale = 0
     handleCollisionEvent()
@@ -95,7 +96,6 @@ function Race () {
 
   function createHalfCircle(x, y, radius, segments, rotate) {
     const points = [];
-    console.log(rotate)
     for (let i = 0; i <= segments; i++) {
         const angle = Math.PI * (i / segments) + rotate; // Half-circle
         const px = x + radius * Math.cos(angle);
@@ -103,14 +103,14 @@ function Race () {
         points.push({ x: px, y: py });
     }
     
-    for (let i = 10; i < points.length - 11; i++) {
+    for (let i = 40; i < points.length - 41; i++) {
         const start = points[i];
         const end = points[i + 1];
         const line = Bodies.rectangle(
             (start.x + end.x) / 2,
             (start.y + end.y) / 2,
             Math.abs(end.x - start.x),
-            1,
+            3,
             { 
               isStatic: true,
               angle: Math.atan2(end.y - start.y, end.x - start.x),
@@ -121,7 +121,7 @@ function Race () {
     }
   }
 
-  const drawSVG = (x,y,svg,rotate=0,direction=0.01) => {
+  const drawSVG = (x,y,svg,rotate=0,direction=0.01,scale=0.1*ratio) => {
     var select = function(root, selector) {
       return Array.prototype.slice.call(root.querySelectorAll(selector));
     };
@@ -132,10 +132,26 @@ function Race () {
             .then(function(raw) { return (new window.DOMParser()).parseFromString(raw, 'image/svg+xml'); });
     };
     loadSvg(svg).then(function(root) {
-      var vertexSets = select(root, 'path')
+      const paths = select(root, 'path');
+      var vertexSets = paths
           .map(function(path) { 
-            return Vertices.scale(Svg.pathToVertices(path, 30),0.1*ratio,-0.1*ratio)
+            return Vertices.scale(Svg.pathToVertices(path, 30),scale,-scale)
           });
+      // Calculate bounding box for the first path
+      // const bbox = paths[0].getBBox();
+      // const boxCenterX = bbox.x + bbox.width / 2;
+      // const boxCenterY = bbox.y + bbox.height / 2;
+
+      // const allVertices = vertexSets.flat();
+      // const centerX = allVertices.reduce((sum, vertex) => sum + vertex.x, 0) / allVertices.length / 10;
+      // const centerY = allVertices.reduce((sum, vertex) => sum + vertex.y, 0) / allVertices.length / 10;
+      
+      // console.log(boxCenterX,boxCenterY,centerX,centerY)
+
+      // // Now adjust the x and y based on the center of the SVG
+      // const adjustedX = x - centerX;
+      // const adjustedY = y - centerY;
+      // console.log(adjustedX, adjustedY)
       const body = Bodies.fromVertices(x,y, vertexSets[0], {
         label: 'wall',
         isStatic: true,
@@ -146,9 +162,14 @@ function Race () {
         },
         collisionFilter: {mask: 0x001}
       }, true)
+      // var constraint = Constraint.create({
+      //   pointA: {x:x, y:y},
+      //   bodyB: body,
+      //   pointB: {x:centerX, y:centerY}
+      // })
       Body.rotate(body,rotate)
       setInterval(()=> Body.rotate(body,direction),20)
-      Composite.add(world, body);
+      add([body])
     });
   }
 
@@ -183,33 +204,33 @@ function Race () {
     Body.rotate(wall12,25*deg)
     const wall13 = Bodies.rectangle(327*ratio, 481.5*ratio,72*ratio,3*ratio,wallOptions)
     Body.rotate(wall13,-23*deg)
-    drawSVG(79*ratio,223*ratio,"/imgs/star.svg",30*deg)
-    drawSVG(79*ratio,334*ratio,"/imgs/star.svg",60*deg)
+    drawSVG(79*ratio,223*ratio,"/imgs/star3.svg",30*deg,0.012,0.2*ratio)
+    drawSVG(79*ratio,334*ratio,"/imgs/star3.svg",60*deg,0.009,0.2*ratio)
     drawSVG(75*ratio,509*ratio,"/imgs/cross.svg",0,-0.01)
-    drawSVG(240*ratio,119*ratio,"/imgs/star1.svg",20*deg)
-    drawSVG(314*ratio,119*ratio,"/imgs/star1.svg",60*deg)
-    drawSVG(240*ratio,188*ratio,"/imgs/star1.svg",80*deg)
-    drawSVG(314*ratio,188*ratio,"/imgs/star1.svg",30*deg)
-    drawSVG(240*ratio,258*ratio,"/imgs/star1.svg",10*deg)
-    drawSVG(314*ratio,258*ratio,"/imgs/star1.svg")
-    drawSVG(305.5*ratio,362*ratio,"/imgs/cross.svg",0,-0.01)
-    drawSVG(278*ratio,497*ratio,"/imgs/cross.svg")
-    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 100, 90*deg);
-    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 100,270*deg);
-    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 100, 90*deg);
-    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 100,270*deg);
-    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 100,270*deg);
+    drawSVG(240*ratio,119*ratio,"/imgs/star3.svg",20*deg,0.013,0.13*ratio)
+    drawSVG(314*ratio,119*ratio,"/imgs/star3.svg",60*deg,0.016,0.13*ratio)
+    drawSVG(240*ratio,188*ratio,"/imgs/star3.svg",80*deg,0.014,0.13*ratio)
+    drawSVG(314*ratio,188*ratio,"/imgs/star3.svg",30*deg,0.017,0.13*ratio)
+    drawSVG(240*ratio,258*ratio,"/imgs/star3.svg",10*deg,0.01,0.13*ratio)
+    drawSVG(314*ratio,258*ratio,"/imgs/star3.svg",21*deg,0.013,0.13*ratio)
+    drawSVG(305.5*ratio,362*ratio,"/imgs/cross.svg",0,-0.018)
+    drawSVG(278*ratio,497*ratio,"/imgs/cross.svg",30*deg,0.03)
+    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 400, 90*deg);
+    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 400,270*deg);
+    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 400, 90*deg);
+    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 400,270*deg);
+    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 400, 90*deg);
+    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 400,270*deg);
+    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 400, 90*deg);
+    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 400,270*deg);
+    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 400, 90*deg);
+    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 400,270*deg);
+    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 400, 90*deg);
+    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 400,270*deg);
+    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 400, 90*deg);
+    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 400,270*deg);
+    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 400, 90*deg);
+    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 400,270*deg);
     add([wall1,wall2,wall3,wall4,wall5,wall6,wall7,wall8,wall9,wall10,wall11,wall12,wall13])
     var triangleVertices = [
       { x: 10*ratio, y: 509*ratio }, // Top point
@@ -241,9 +262,9 @@ function Race () {
     var triangleVertices1 = [
       { x: 180*ratio, y: 0*ratio }, // Top point
       { x: 212 * ratio, y: 0*ratio }, // Left point
-      { x:  180 * ratio, y: 5 * ratio }  // Right point
+      { x:  180 * ratio, y: 7 * ratio }  // Right point
     ];
-    add(Bodies.fromVertices(180*ratio,2.5*ratio,triangleVertices1,{
+    add(Bodies.fromVertices(180*ratio,3.5*ratio,triangleVertices1,{
       isStatic:true,
       render: {
           fillStyle: '#111',
@@ -264,7 +285,7 @@ function Race () {
     }, 20);
     add([elevator,door])
     add([
-      Bodies.rectangle(cw / 2*ratio, ch+40*ratio, cw*ratio, 81*ratio, wallOptionsBlack),
+      Bodies.rectangle(cw / 2*ratio, ch+40*ratio, cw*ratio, 90*ratio, wallOptionsBlack),
       Bodies.rectangle(-35*ratio, ch / 2*ratio, 90*ratio, ch*ratio, wallOptionsBlack),
       Bodies.rectangle(cw+35*ratio, ch / 2*ratio, 90*ratio, ch*ratio, wallOptionsBlack),
       Bodies.rectangle(cw / 2*ratio, -40*ratio, cw*ratio, 81*ratio, wallOptionsBlack),
@@ -273,31 +294,15 @@ function Race () {
       Bodies.rectangle(165*ratio,256*ratio,10*ratio,512*ratio,wallOptionsBlack),
       Bodies.rectangle(85*ratio,603*ratio,170*ratio,100*ratio,wallOptionsBlack),
       Bodies.rectangle(202*ratio,348*ratio,10*ratio,600*ratio,wallOptionsBlack),
-      Bodies.rectangle(283*ratio, 556*ratio, 146*ratio, 15*ratio, {label: 'dead', isStatic: true,density: 0.8, restitution: 0.6, render:{sprite: {texture: '/imgs/final.png', xScale: ratio, yScale: ratio}}, collisionFilter: {mask: 0x001}}),
+      
     ])
+   
+    const final = Bodies.rectangle(283*ratio, 556*ratio, 146*ratio, 15*ratio, {label: 'dead', isStatic: true,density: 0.8, restitution: 0.6, render:{sprite: {texture: '/imgs/final.png', xScale: ratio, yScale: ratio}}, collisionFilter: {mask: 0x001}})
+    add(final)
   };
 
   const add = (body) => {
     Composite.add(world, body)
-  }
-
-  const createCircleStack = (y, count) => {
-    return Composites.stack((cw - (12 * count + 11 * (count - 1)) * ratio) / 2, y, count, 1, 11 * ratio, 0, (x, y) =>
-      Bodies.circle(x, y, 6 * ratio, { friction: 0.001, restitution: 0.5,  isStatic: true, label: 'wall', render: { fillStyle: '#B45AD3' }, collisionFilter: { mask: 0x001 } })
-    );
-  };
-
-  const createEllipseVerticesArray = (ellipseFlatness,ellipseSize) => {
-    let ellipseVerticesArray = [];
-
-    let ellipseVertices = 50;
-
-    for (let i = 0; i < ellipseVertices; i++) {
-        let x = ellipseSize * Math.cos(i);
-        let y = ellipseFlatness * ellipseSize * Math.sin(i);
-        ellipseVerticesArray.push({ x: x, y: y });
-    }
-    return ellipseVerticesArray
   }
 
   const addBallsToWorld = () => {
@@ -320,84 +325,6 @@ function Race () {
       )
     );
     add(stack);
-  };
-
-  const movingHandle = (handle,angleLimitPositive,angleLimitNegative) => {
-    let angle = 0;
-    let direction = 1;
-    let speed=0.015;
-    setInterval(() => {
-      if (angle > angleLimitPositive) direction = -1;
-      else if (angle < angleLimitNegative) direction = 1;
-      
-      angle += direction * speed;
-      Body.rotate(handle, direction * speed);
-    }, 20);
-  }
-
-  const rotateHandle = (handle) => {
-    let speed=0.015;
-    setInterval(() => {
-      Body.rotate(handle, speed);
-    }, 20);
-  }
-
-  const addHandles = () => {
-    const wallOptions = {label: 'wall', isStatic: true, render:{fillStyle: '#045aff'}, collisionFilter: {mask: 0x001}}
-
-    const rect = Bodies.rectangle(160*ratio,145*ratio,170*ratio,8*ratio, wallOptions)
-    add(rect)
-    movingHandle(rect, Math.PI / 6, -Math.PI / 6)
-    const rectangles = [];
-    for (let i = 0; i < 4; i++) {
-      const rect = Bodies.rectangle(160 * ratio, 232 * ratio, 60 * ratio, 5 * ratio, wallOptions);
-      Body.rotate(rect, (Math.PI / 4) * i);
-      rectangles.push(rect);
-      rotateHandle(rect)
-    }
-    add(rectangles)
-
-    let ellipse1 = Bodies.fromVertices(119*ratio, 313*ratio, createEllipseVerticesArray(0.1+(ratio-1)/100,40*ratio), wallOptions, 5);
-    let ellipse2 = Bodies.fromVertices(201*ratio, 313*ratio, createEllipseVerticesArray(0.1+(ratio-1)/100,40*ratio), wallOptions, 5);
-    add([ellipse1, ellipse2]);
-    rotateHandle(ellipse1)
-    Body.rotate(ellipse2, Math.PI / 4 * 3)
-    rotateHandle(ellipse2)
-
-    const positions = [
-      { x: 10 * ratio, y: [460.5, 340.5, 220.5, 100.5] },
-      { x: 310 * ratio, y: [460.5, 340.5, 220.5, 100.5] },
-    ];
-    
-    const bodies = positions.flatMap(({ x, y }) =>
-      y.map((yPos) => Bodies.rectangle(x, yPos * ratio, 20 * ratio, 5 * ratio, wallOptions))
-    );
-    
-    add(bodies);
-    
-    bodies.forEach((body, index) => {
-      const direction = index / 4 < 1 ? Math.PI / 60 : -Math.PI / 60;
-      Body.rotate(body, direction);
-    });
-    
-    setInterval(() => {
-      bodies.forEach((body) => {
-        const { y } = body.position;
-        if (y < 30) {
-          Body.setPosition(body, { x: body.position.x, y: ch+10 });
-        }
-        Body.translate(body, { x: 0, y: -4 }, true);
-      });
-    }, 20);
-
-    const triangle2 = Bodies.polygon(160*ratio,137*ratio,3,10*ratio,wallOptions)
-    Body.rotate(triangle2, Math.PI / 2)
-    add(triangle2)
-
-    add([
-      Bodies.circle(119*ratio,313*ratio,8*ratio,wallOptions),
-      Bodies.circle(201*ratio,313*ratio,8*ratio,wallOptions),    
-    ])
   };
 
   const handleCollisionEvent = () => {
