@@ -36,7 +36,7 @@ function Race () {
     userIds.map((user, index) => {
       const x = 23.5 + 11*index + 15 * index
       const y = 21.5
-      setUsers(prev => [...prev,{id:user, position:{x,y}, color:colors[(startIndex + index) % 5]}])
+      setUsers(prev => [...prev,{id:user, position:{x,y}, color:colors[index]}])
     })
   },[state])
 
@@ -81,7 +81,7 @@ function Race () {
     drawWorld()
     addBallsToWorld()
     if (memberCountInRoom == 5)
-      engine.current.gravity.scale = 0.0006
+      engine.current.gravity.scale = 0.00065
     else
       engine.current.gravity.scale = 0
     handleCollisionEvent()
@@ -103,7 +103,7 @@ function Race () {
         points.push({ x: px, y: py });
     }
     
-    for (let i = 40; i < points.length - 41; i++) {
+    for (let i = 10; i < points.length - 11; i++) {
         const start = points[i];
         const end = points[i + 1];
         const line = Bodies.rectangle(
@@ -207,30 +207,30 @@ function Race () {
     drawSVG(79*ratio,223*ratio,"/imgs/star3.svg",30*deg,0.012,0.2*ratio)
     drawSVG(79*ratio,334*ratio,"/imgs/star3.svg",60*deg,0.009,0.225*ratio)
     drawSVG(75*ratio,509*ratio,"/imgs/cross.svg",0,-0.01)
-    drawSVG(240*ratio,119*ratio,"/imgs/star3.svg",20*deg,0.013,0.15*ratio)
-    drawSVG(314*ratio,119*ratio,"/imgs/star3.svg",60*deg,0.016,0.15*ratio)
-    drawSVG(240*ratio,188*ratio,"/imgs/star3.svg",80*deg,0.014,0.15*ratio)
-    drawSVG(314*ratio,188*ratio,"/imgs/star3.svg",30*deg,0.017,0.15*ratio)
-    drawSVG(240*ratio,258*ratio,"/imgs/star3.svg",10*deg,0.01,0.15*ratio)
-    drawSVG(314*ratio,258*ratio,"/imgs/star3.svg",21*deg,0.013,0.15*ratio)
+    drawSVG(240*ratio,119*ratio,"/imgs/star3.svg",20*deg,0.013,0.13*ratio)
+    drawSVG(314*ratio,119*ratio,"/imgs/star3.svg",60*deg,0.016,0.13*ratio)
+    drawSVG(240*ratio,188*ratio,"/imgs/star3.svg",80*deg,0.014,0.13*ratio)
+    drawSVG(314*ratio,188*ratio,"/imgs/star3.svg",30*deg,0.017,0.13*ratio)
+    drawSVG(240*ratio,258*ratio,"/imgs/star3.svg",10*deg,0.01,0.13*ratio)
+    drawSVG(314*ratio,258*ratio,"/imgs/star3.svg",21*deg,0.013,0.13*ratio)
     drawSVG(305.5*ratio,362*ratio,"/imgs/cross.svg",0,-0.018)
     drawSVG(278*ratio,497*ratio,"/imgs/cross.svg",30*deg,0.03)
-    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 400, 90*deg);
-    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 400,270*deg);
-    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 400, 90*deg);
-    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 400,270*deg);
-    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 400, 90*deg);
-    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 400,270*deg);
-    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 400, 90*deg);
-    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 400,270*deg);
-    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 400, 90*deg);
-    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 400,270*deg);
-    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 400, 90*deg);
-    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 400,270*deg);
-    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 400, 90*deg);
-    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 400,270*deg);
-    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 400, 90*deg);
-    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 400,270*deg);
+    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 100, 90*deg);
+    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 100,270*deg);
+    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 100, 90*deg);
+    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 100,270*deg);
+    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 100, 90*deg);
+    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 100,270*deg);
+    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 100, 90*deg);
+    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 100,270*deg);
+    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 100, 90*deg);
+    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 100,270*deg);
+    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 100, 90*deg);
+    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 100,270*deg);
+    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 100, 90*deg);
+    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 100,270*deg);
+    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 100, 90*deg);
+    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 100,270*deg);
     add([wall1,wall2,wall3,wall4,wall5,wall6,wall7,wall8,wall9,wall10,wall11,wall12,wall13])
     var triangleVertices = [
       { x: 10*ratio, y: 509*ratio }, // Top point
