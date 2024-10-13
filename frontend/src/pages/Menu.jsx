@@ -20,14 +20,14 @@ function Menu () {
     setMyIndex('323233')
   },[])
 
-  const handlePlayButton = (e) => {
-    e.preventDefault();
-    navigate('/game',{state:{ton,room,memberCountInRoom,myIndex,users}})
-  }
-
   const handleRuble = (e) => {
     e.preventDefault();
     navigate('/ruble')
+  }
+
+  const handleRace = (e) => {
+    e.preventDefault();
+    navigate('/race')
   }
 
   const getUsersData = () => {
@@ -63,7 +63,7 @@ function Menu () {
                 <div className='cursor-pointer inline-block text-center' onClick={handleRuble}>
                     <img className='w-full rounded-[18.5px] z-10' src="/imgs/game_mode.jpg" alt=''/>
                 </div>
-                <div className='cursor-pointer inline-block'>
+                <div className='cursor-pointer inline-block' onClick={handleRace}>
                     <img className='w-full rounded-[18.5px] z-10' src="/imgs/game_mode.jpg" alt=''/>
                 </div>
             </div>
