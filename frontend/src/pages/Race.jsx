@@ -17,7 +17,7 @@ function Race () {
   const world = useMemo(()=>engine.current.world,[engine])
 
   const defaultWidth = 367;
-  const defaultHeight = 649.89;
+  const defaultHeight = 641;
   let cw = window.innerWidth;
   let ratio = cw / defaultWidth;
   let ch = defaultHeight * ratio
@@ -84,6 +84,7 @@ function Race () {
       min: { x: 0, y: 0 },
       max: { x: cw, y: ch }
     });
+    render.options.background = '#2d2850'
     drawWorld()
     addBallsToWorld()
     if (memberCountInRoom == 5)
@@ -185,64 +186,158 @@ function Race () {
     const wallOptionsBlack = {label: 'wall', isStatic: true,density: 0.8, restitution: 0.6, render:{fillStyle: '#111'}, collisionFilter: {mask: 0x001}}
     
     const deg = Math.PI / 180
-    const wall1 = Bodies.rectangle(74.5,88.5*ratio,137*ratio,3*ratio, wallOptions)
+
+    const wall1 = Bodies.rectangle(71.5,99.5*ratio,137*ratio,5*ratio, wallOptions)
     Body.rotate(wall1, 8*deg)
-    const wall2 = Bodies.rectangle(95.5*ratio,124.5*ratio,137*ratio,3*ratio, wallOptions)
+    const wall2 = Bodies.rectangle(120.5*ratio,141.5*ratio,97*ratio,5*ratio, wallOptions)
     Body.rotate(wall2, -8*deg)
-    const wall3 = Bodies.rectangle(37*ratio, 156.5*ratio, 66*ratio, 3*ratio, wallOptions)
-    Body.rotate(wall3, 8*deg)
-    const wall4 = Bodies.rectangle(124*ratio, 156.5*ratio, 76*ratio,3*ratio, wallOptions)
-    Body.rotate(wall4, -8*deg)
-    const wall5 = Bodies.rectangle(77*ratio, 416.5*ratio, 138*ratio,3*ratio, wallOptions)
+
+    const wall3 = Bodies.rectangle(39.5*ratio,156.5*ratio,56*ratio,10*ratio, wallOptions)
+    Body.rotate(wall3, -8*deg)
+    const wall4 = Bodies.rectangle(39.5*ratio,156.5*ratio,56*ratio,10*ratio, wallOptions)
+    Body.rotate(wall4, -98*deg)
+
+    rotateHandle(wall3,-1)
+    rotateHandle(wall4,-1)
+
+    const wall5 = Bodies.rectangle(96*ratio,197.5*ratio,108*ratio,5.2*ratio, wallOptions)
     Body.rotate(wall5, 8*deg)
-    const wall6 = Bodies.rectangle(98*ratio, 456.5*ratio, 134*ratio,3*ratio, wallOptions)
-    Body.rotate(wall6, -8*deg)
-    const wall7 = Bodies.rectangle(218.5*ratio, 80.5*ratio,37*ratio,3*ratio,wallOptions)
-    Body.rotate(wall7, 15*deg)
-    const wall8 = Bodies.rectangle(343*ratio, 80.5*ratio,38*ratio,3*ratio,wallOptions)
-    Body.rotate(wall8, -13*deg)
-    const wall9 = Bodies.rectangle(296*ratio, 325.5*ratio,144*ratio,3*ratio,wallOptions)
-    Body.rotate(wall9,-13*deg)
-    const wall10 = Bodies.rectangle(276*ratio, 373.5*ratio,144*ratio,3*ratio,wallOptions)
-    Body.rotate(wall10,15*deg)
-    const wall11 = Bodies.rectangle(302.5*ratio, 419.5*ratio,115*ratio,3*ratio,wallOptions)
-    Body.rotate(wall11,-13*deg)
-    const wall12 = Bodies.rectangle(229.5*ratio, 485.5*ratio,57*ratio,3*ratio,wallOptions)
-    Body.rotate(wall12,25*deg)
-    const wall13 = Bodies.rectangle(327*ratio, 481.5*ratio,72*ratio,3*ratio,wallOptions)
-    Body.rotate(wall13,-23*deg)
-    drawSVG(79*ratio,223*ratio,"/imgs/star3.svg",30*deg,0.012,0.2*ratio)
-    drawSVG(79*ratio,334*ratio,"/imgs/star3.svg",60*deg,0.009,0.225*ratio)
-    drawSVG(75*ratio,509*ratio,"/imgs/cross.svg",0,-0.01)
-    drawSVG(240*ratio,119*ratio,"/imgs/star3.svg",20*deg,0.013,0.13*ratio)
-    drawSVG(314*ratio,119*ratio,"/imgs/star3.svg",60*deg,0.016,0.13*ratio)
-    drawSVG(240*ratio,188*ratio,"/imgs/star3.svg",80*deg,0.014,0.13*ratio)
-    drawSVG(314*ratio,188*ratio,"/imgs/star3.svg",30*deg,0.017,0.13*ratio)
-    drawSVG(240*ratio,258*ratio,"/imgs/star3.svg",10*deg,0.01,0.13*ratio)
-    drawSVG(314*ratio,258*ratio,"/imgs/star3.svg",21*deg,0.013,0.13*ratio)
-    drawSVG(305.5*ratio,362*ratio,"/imgs/cross.svg",0,-0.018)
-    drawSVG(278*ratio,497*ratio,"/imgs/cross.svg",30*deg,0.03)
-    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 100, 90*deg);
-    createHalfCircle(79*ratio, 223*ratio, 54*ratio, 100,270*deg);
-    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 100, 90*deg);
-    createHalfCircle(78*ratio, 334*ratio, 55*ratio, 100,270*deg);
-    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(240.5*ratio, 119.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(314.5*ratio, 119.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(240.5*ratio, 188.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(314.5*ratio, 188.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(240.5*ratio, 258.5*ratio, 36*ratio, 100,270*deg);
-    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 100, 90*deg);
-    createHalfCircle(314.5*ratio, 258.5*ratio, 36*ratio, 100,270*deg);
-    add([wall1,wall2,wall3,wall4,wall5,wall6,wall7,wall8,wall9,wall10,wall11,wall12,wall13])
+
+    const wall6 = Bodies.rectangle(117.5*ratio, 241.5*ratio, 105*ratio,5.2*ratio, wallOptions)
+    Body.rotate(wall6, -10*deg)
+
+    const wall7 = Bodies.rectangle(92.5*ratio, 291.5*ratio,107*ratio,5.2*ratio,wallOptions)
+    Body.rotate(wall7, 8*deg)
+
+    const wall8 = Bodies.rectangle(116.5*ratio, 328.5*ratio,109*ratio,5.2*ratio,wallOptions)
+    Body.rotate(wall8, -10*deg)
+
+    const wall9 = Bodies.rectangle(34*ratio, 383.5*ratio,68*ratio,6.7*ratio,wallOptions)
+    Body.rotate(wall9, 10*deg)
+
+    const wall10 = Bodies.rectangle(139*ratio, 384.5*ratio,62*ratio,6.7*ratio,wallOptions)
+    Body.rotate(wall10,-10*deg)
+
+    const wall11 = Bodies.rectangle(40.5*ratio, 267.5*ratio,5.2*ratio,147*ratio,wallOptions)
+    
+    const wall14 = Bodies.rectangle(92*ratio,391*ratio,30*ratio,5.2*ratio, wallOptions)
+    Body.rotate(wall14, -8*deg)
+    const wall15 = Bodies.rectangle(92*ratio,391*ratio,30*ratio,5.2*ratio, wallOptions)
+    Body.rotate(wall15, -98*deg)
+
+    rotateHandle(wall14)
+    rotateHandle(wall15)
+    
+    
+
+    add([wall1,wall2,wall3,wall4,wall5,wall6,wall7,wall8,wall9,wall10,wall11,wall14,wall15])
+    
+    const rw1 = Bodies.rectangle(264.5*ratio, 52.5*ratio,143*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw1, 7*deg)
+
+    const rw2 = Bodies.rectangle(270.5*ratio, 141.5*ratio,109*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw2, -8*deg)
+
+    const rw3 = Bodies.rectangle(266.5*ratio, 180.5*ratio,143*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw3, 7*deg)
+
+    const rw4 = Bodies.rectangle(229.5*ratio, 220.5*ratio,73*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw4, 10*deg)
+
+    const rw5 = Bodies.rectangle(322.5*ratio, 219.5*ratio,75*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw5, -10*deg)
+
+    const rw6 = Bodies.rectangle(243*ratio, 273.5*ratio,50*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw6, -10*deg)
+
+    const rw7 = Bodies.rectangle(307.5*ratio, 273.5*ratio,49*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw7, 10*deg)
+
+    const rw8 = Bodies.rectangle(229.5*ratio, 320.5*ratio,75*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw8, 10*deg)
+
+    const rw9 = Bodies.rectangle(324.5*ratio, 320.5*ratio,75*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw9, -10*deg)
+
+    const rw10 = Bodies.rectangle(244.5*ratio, 360.5*ratio,51*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw10, -10*deg)
+
+    const rw11 = Bodies.rectangle(308.5*ratio, 360.5*ratio,49*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw11, 10*deg)
+
+    const rw12 = Bodies.rectangle(229.5*ratio, 407.5*ratio,73*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw12, 10*deg)
+
+    const rw13 = Bodies.rectangle(325.5*ratio, 407.5*ratio,75*ratio,5.2*ratio,wallOptions)
+    Body.rotate(rw13, -10*deg)
+
+    const rw14 = Bodies.rectangle(232*ratio, 475.5*ratio,78*ratio,6.7*ratio,wallOptions)
+    Body.rotate(rw14, 25*deg)
+
+    const rw15 = Bodies.rectangle(325*ratio, 475.5*ratio,78*ratio,6.7*ratio,wallOptions)
+    Body.rotate(rw15, -25*deg)
+
+    const rw16 = Bodies.rectangle(270.5*ratio, 520*ratio,3*ratio,60*ratio,wallOptions)
+
+    const rw17 = Bodies.rectangle(286.5*ratio, 520*ratio,3*ratio,60*ratio,wallOptions)
+
+    add([rw1,rw2,rw3,rw4,rw5,rw6,rw7,rw8,rw9,rw10,rw11,rw12,rw13,rw14,rw15,rw16,rw17])
+
+
+    const rw18 = Bodies.rectangle(324*ratio,95*ratio,56*ratio,10*ratio, wallOptions)
+    Body.rotate(rw18, -8*deg)
+    const rw19 = Bodies.rectangle(324*ratio,95*ratio,56*ratio,10*ratio, wallOptions)
+    Body.rotate(rw19, -98*deg)
+
+    add([rw18,rw19])
+    rotateHandle(rw18,-1)
+    rotateHandle(rw19,-1)
+
+    add([Bodies.circle(26*ratio,433*ratio,8*ratio,wallOptions),
+    Bodies.circle(56*ratio,433*ratio,8*ratio,wallOptions),
+    Bodies.circle(86*ratio,433*ratio,8*ratio,wallOptions),
+    Bodies.circle(116*ratio,433*ratio,8*ratio,wallOptions),
+    Bodies.circle(146*ratio,433*ratio,8*ratio,wallOptions)])
+
+    add([Bodies.circle(41*ratio,460*ratio,8*ratio,wallOptions),
+      Bodies.circle(73*ratio,460*ratio,8*ratio,wallOptions),
+      Bodies.circle(105*ratio,460*ratio,8*ratio,wallOptions),
+      Bodies.circle(137*ratio,460*ratio,8*ratio,wallOptions)])
+
+    add([Bodies.circle(26*ratio,487*ratio,8*ratio,wallOptions),
+        Bodies.circle(56*ratio,487*ratio,8*ratio,wallOptions),
+        Bodies.circle(86*ratio,487*ratio,8*ratio,wallOptions),
+        Bodies.circle(116*ratio,487*ratio,8*ratio,wallOptions),
+        Bodies.circle(146*ratio,487*ratio,8*ratio,wallOptions)])
+
+    add([
+      Bodies.circle(40.5*ratio,190.5*ratio,5.5*ratio,wallOptions),
+      Bodies.circle(40.5*ratio,284.5*ratio,5.5*ratio,wallOptions),
+      Bodies.circle(40.5*ratio,338.5*ratio,5.5*ratio,wallOptions),
+      Bodies.circle(325.5*ratio,133.5*ratio,5.5*ratio,wallOptions),
+      Bodies.circle(270*ratio,494*ratio,4*ratio,wallOptions),
+      Bodies.circle(287*ratio,494*ratio,4*ratio,wallOptions),
+      Bodies.circle(276*ratio,269*ratio,15*ratio,wallOptions),
+      Bodies.circle(276*ratio,356*ratio,15*ratio,wallOptions),
+    ])
+
+    // add(Composites.stack(20*ratio, 465*ratio, 5, 1, 16 * ratio, 0, (x, y) =>
+    //   Bodies.circle(x, y, 8 * ratio, { friction: 0.001, restitution: 0.5,  isStatic: true, label: 'wall', render: { fillStyle: '#8102FF' }, collisionFilter: { mask: 0x001 } })
+    // ));
+
+    const handle1 = Bodies.rectangle(277.5*ratio, 293.5*ratio,3*ratio,59*ratio,wallOptions)
+    const handle2 = Bodies.rectangle(277.5*ratio, 380.5*ratio,3*ratio,59*ratio,wallOptions)
+    Body.rotate(handle1,-45*deg, { x: 277.5*ratio, y: 269*ratio })
+    Body.rotate(handle2,-45*deg, { x: 277.5*ratio, y: 356*ratio })
+    add([handle1, handle2])
+
+    movingHandle(handle1,90*deg,0*deg,{ x: 277.5*ratio, y: 269*ratio })
+    movingHandle(handle2,90*deg,0*deg,{ x: 277.5*ratio, y: 356*ratio })
+
     var triangleVertices = [
       { x: 10*ratio, y: 509*ratio }, // Top point
-      { x: 10 * ratio, y: 548*ratio }, // Left point
-      { x: 166 * ratio, y: 548 * ratio }  // Right point
+      { x: 10 * ratio, y: 552*ratio }, // Left point
+      { x: 177 * ratio, y: 552 * ratio }  // Right point
     ];
     add(Bodies.fromVertices(59*ratio,538*ratio,triangleVertices,{
       isStatic:true,
@@ -253,12 +348,12 @@ function Race () {
       }
     }))
 
-    var triangleVertices1 = [
-      { x: 275*ratio, y: 76*ratio }, // Top point
-      { x: 256.5 * ratio, y: 85*ratio }, // Left point
-      { x:  298 * ratio, y: 85 * ratio }  // Right point
+    var triangleVertices = [
+      { x: 278*ratio, y: 434*ratio }, // Top point
+      { x: 264 * ratio, y: 462*ratio }, // Left point
+      { x: 292 * ratio, y: 462 * ratio }  // Right point
     ];
-    add(Bodies.fromVertices(276.5*ratio,80.5*ratio,triangleVertices1,{
+    add(Bodies.fromVertices(278*ratio,448*ratio,triangleVertices,{
       isStatic:true,
       render: {
           fillStyle: '#8102FF',
@@ -266,6 +361,7 @@ function Race () {
           lineWidth: 2
       }
     }))
+
     var triangleVertices1 = [
       { x: 180*ratio, y: 0*ratio }, // Top point
       { x: 212 * ratio, y: 0*ratio }, // Left point
@@ -279,46 +375,75 @@ function Race () {
           lineWidth: 2
       }
     }))
-    const elevator = Bodies.rectangle(184*ratio,ch-20*ratio,38*ratio,40*ratio,wallOptions)
-    const door = Bodies.rectangle(165*ratio,ch-40*ratio,10*ratio,80*ratio,wallOptionsBlack)
+    const final = Bodies.rectangle(279*ratio, 556*ratio, 167*ratio, 15*ratio, {label: 'dead', isStatic: true,density: 0.8, restitution: 0.6, render:{sprite: {texture: '/imgs/final.png', xScale: ratio, yScale: ratio}}, collisionFilter: {mask: 0x001}})
+    add(final)
+
+    //elevator
+    let bodies = []
+    let cy = defaultHeight / 24
+    for(let i = 0; i < 24; i++){
+      bodies.push(Bodies.rectangle(186*ratio,cy*i*ratio,26*ratio,3*ratio,wallOptions))
+    }
+    
+    add(bodies);
+    
     setInterval(() => {
-        const { y } = elevator.position;
+      bodies.forEach((body) => {
+        const { y } = body.position;
         if (y < 30) {
-          Body.setPosition(elevator, { x: elevator.position.x, y: ch+10 });
-          Body.setPosition(door, { x: door.position.x, y: ch-10})
+          Body.setPosition(body, { x: body.position.x, y: ch+10 });
         }
-        Body.translate(elevator, { x: 0, y: -4 }, true);
-        Body.translate(door, {x:0,y:-4},true)
+        Body.translate(body, { x: 0, y: -2 }, true);
+      });
     }, 20);
-    add([elevator,door])
+
     add([
       Bodies.rectangle(cw / 2*ratio, ch+40*ratio, cw*ratio, 90*ratio, wallOptionsBlack),
       Bodies.rectangle(-35*ratio, ch / 2*ratio, 90*ratio, ch*ratio, wallOptionsBlack),
       Bodies.rectangle(cw+35*ratio, ch / 2*ratio, 90*ratio, ch*ratio, wallOptionsBlack),
       Bodies.rectangle(cw / 2*ratio, -40*ratio, cw*ratio, 81*ratio, wallOptionsBlack),
       Bodies.rectangle(87*ratio, 43*ratio, 152*ratio, 6*ratio, {label: 'start', isStatic: true,density: 0.8, restitution: 0.6, render:{fillStyle: '#fff'}, collisionFilter: {mask: 0x002}}),
-      Bodies.rectangle(165*ratio,256*ratio,10*ratio,512*ratio,wallOptionsBlack),
-      Bodies.rectangle(165*ratio,256*ratio,10*ratio,512*ratio,wallOptionsBlack),
-      Bodies.rectangle(85*ratio,603*ratio,170*ratio,100*ratio,wallOptionsBlack),
-      Bodies.rectangle(202*ratio,348*ratio,10*ratio,600*ratio,wallOptionsBlack),
-      
+      Bodies.rectangle(172.5*ratio,256*ratio,9*ratio,512*ratio,wallOptionsBlack),
+      Bodies.rectangle(88.5*ratio,603*ratio,177*ratio,100*ratio,wallOptionsBlack),
+      Bodies.rectangle(194.5*ratio,343.5*ratio,9*ratio,609*ratio,wallOptionsBlack),
     ])
-   
-    const final = Bodies.rectangle(283*ratio, 556*ratio, 146*ratio, 15*ratio, {label: 'dead', isStatic: true,density: 0.8, restitution: 0.6, render:{sprite: {texture: '/imgs/final.png', xScale: ratio, yScale: ratio}}, collisionFilter: {mask: 0x001}})
-    add(final)
+
+    
     
   };
+
 
   const add = (body) => {
     Composite.add(world, body)
   }
+
+  const movingHandle = (handle,angleLimitPositive,angleLimitNegative,center) => {
+    let angle = 0;
+    let direction = 1;
+    let speed=0.015;
+    setInterval(() => {
+      if (angle > angleLimitPositive) direction = -1;
+      else if (angle < angleLimitNegative) direction = 1;
+      
+      angle += direction * speed;
+      Body.rotate(handle, direction * speed,center);
+    }, 20);
+  }
+
+  const rotateHandle = (handle, direction=1) => {
+    let speed=0.015*direction;
+    setInterval(() => {
+      Body.rotate(handle, speed);
+    }, 20);
+  }
+
 
   const addBallsToWorld = () => {
     const stack = users.map((user, i) => 
       Bodies.circle(
         user.position.x*ratio,
         user.position.y*ratio,
-        5.5*ratio,
+        4.5*ratio,
         {
           label: "ball",
           index: i,

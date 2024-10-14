@@ -16,8 +16,8 @@ function Game () {
   const engine = useRef(Engine.create())
   const world = useMemo(()=>engine.current.world,[engine])
 
-  const defaultWidth = 320;
-  const defaultHeight = 529;
+  const defaultWidth = 363;
+  const defaultHeight = 614;
   let cw = window.innerWidth;
   let ratio = cw / defaultWidth;
   let ch = defaultHeight * ratio
@@ -92,43 +92,115 @@ function Game () {
   }
 
   const drawWorld = () => {
-    const wallOptions = {label: 'wall', isStatic: true, render:{fillStyle: '#72d5f4'}, collisionFilter: {mask: 0x001}}
+    const wallOptions = {label: 'wall', isStatic: true, render:{fillStyle: '#045AFF'}, collisionFilter: {mask: 0x001}}
 
     add([
       Bodies.rectangle(cw / 2, ch+40, cw, 82, wallOptions),
       Bodies.rectangle(-40, ch / 2, 81, ch, wallOptions),
       Bodies.rectangle(cw+40, ch / 2, 81, ch, wallOptions),
       Bodies.rectangle(cw / 2, -40, cw, 81, wallOptions),
-      Bodies.rectangle(22.5*ratio,239.5*ratio,5*ratio,405*ratio, wallOptions),
-      Bodies.rectangle(297.5*ratio,239.5*ratio,5*ratio,405*ratio, wallOptions),
-      Bodies.rectangle(22.5*ratio,491.5*ratio,5*ratio,27*ratio, wallOptions),//37
-      Bodies.rectangle(297.5*ratio,491.5*ratio,5*ratio,27*ratio, wallOptions),//37
-      Bodies.rectangle(91.5*ratio, 521*ratio, 5*ratio,16*ratio, wallOptions),
-      Bodies.rectangle(228.5*ratio, 521*ratio, 5*ratio,16*ratio, wallOptions),  
+      Bodies.rectangle(28.5*ratio,308.5*ratio,3*ratio,503*ratio, wallOptions),
+      Bodies.rectangle(335.5*ratio,304.5*ratio,3*ratio,497*ratio, wallOptions),
+      Bodies.rectangle(130.5*ratio,592.5*ratio,3*ratio,47*ratio, wallOptions),
+      Bodies.rectangle(232.5*ratio,592.5*ratio,3*ratio,47*ratio, wallOptions),
     ])
 
-    const wall1 = Bodies.rectangle(66*ratio,418*ratio,5*ratio,154.8*ratio, wallOptions)
-    Body.rotate(wall1, Math.PI / 4 - 0.17)
-    const wall2 = Bodies.rectangle(254*ratio,418*ratio,5*ratio,154.8*ratio, wallOptions)
-    Body.rotate(wall2, -Math.PI / 4 + 0.17)
-    const wall3 = Bodies.rectangle(57*ratio, 521*ratio, 75.7*ratio,5*ratio, wallOptions)
-    Body.rotate(wall3, -Math.PI / 12)
-    const wall4 = Bodies.rectangle(263*ratio, 521*ratio, 75.7*ratio,5*ratio, wallOptions)
-    Body.rotate(wall4, Math.PI / 12)
-    const triangle1 = Bodies.polygon(160*ratio,350*ratio,3,10*ratio,wallOptions)
-    Body.rotate(triangle1, Math.PI / 2)
-    
-    const ellipse3 = Bodies.fromVertices(80*ratio, 193*ratio, createEllipseVerticesArray(0.1+(ratio-1)/100,60*ratio), wallOptions, 5)
-    Body.rotate(ellipse3, Math.PI / 4)
-    const ellipse4 = Bodies.fromVertices(240*ratio, 193*ratio, createEllipseVerticesArray(0.1+(ratio-1)/100,60*ratio), wallOptions, 5)
-    Body.rotate(ellipse4, -Math.PI / 4)
-    add([wall1,wall2,wall3,wall4, ellipse3, ellipse4, triangle1])
+    const deg = Math.PI / 180
 
-    for (let i = 5; i <= 8; i++) {
-      const yPosition = (382*ratio) + (i - 5) * 24 * ratio;
-      add(createCircleStack(yPosition, i));
-    }
-    add(Bodies.rectangle(cw / 2, ch+40, 132*ratio, 82, {label: 'dead', isStatic: true, render:{fillStyle: '#ff0000'}, collisionFilter: {mask: 0x001}}))
+    const wall1 = Bodies.rectangle(93*ratio,71.5*ratio,134*ratio,3*ratio, wallOptions)
+    Body.rotate(wall1, 10*deg)
+    const wall2 = Bodies.rectangle(268*ratio,72.5*ratio,130*ratio,3*ratio, wallOptions)
+    Body.rotate(wall2, -10*deg)
+    const wall3 = Bodies.rectangle(114*ratio, 117.5*ratio, 130*ratio,3*ratio, wallOptions)
+    Body.rotate(wall3, -10*deg)
+    const wall4 = Bodies.rectangle(250*ratio, 117.5*ratio, 134*ratio,3*ratio, wallOptions)
+    Body.rotate(wall4, 10*deg)
+    const wall5 = Bodies.rectangle(94*ratio, 155.5*ratio, 134*ratio,3*ratio, wallOptions)
+    Body.rotate(wall5, 10*deg)
+    const wall6 = Bodies.rectangle(267*ratio, 155.5*ratio, 130*ratio,3*ratio, wallOptions)
+    Body.rotate(wall6, -10*deg)
+    const wall7 = Bodies.rectangle(150.5*ratio, 308*ratio, 3*ratio,62*ratio, wallOptions)
+    Body.rotate(wall7, -17*deg)
+    const wall8 = Bodies.rectangle(212.5*ratio, 308*ratio, 3*ratio,62*ratio, wallOptions)
+    Body.rotate(wall8, 16*deg)
+    const wall9 = Bodies.rectangle(116*ratio, 360.5*ratio, 98*ratio,3*ratio, wallOptions)
+    Body.rotate(wall9, 21*deg)
+    const wall14 = Bodies.rectangle(247.5*ratio, 353.5*ratio, 97*ratio,3*ratio, wallOptions)
+    Body.rotate(wall14, -29*deg)
+    const wall10 = Bodies.rectangle(112.5*ratio, 459.5*ratio, 3*ratio,189*ratio, wallOptions)
+    Body.rotate(wall10, 32*deg)
+    const wall11 = Bodies.rectangle(249.5*ratio, 460.5*ratio, 3*ratio,191*ratio, wallOptions)
+    Body.rotate(wall11, -31*deg)
+    const wall12 = Bodies.rectangle(67*ratio, 582.5*ratio, 134*ratio,3*ratio, wallOptions)
+    Body.rotate(wall12, -10*deg)
+    const wall13 = Bodies.rectangle(312.5*ratio, 585.5*ratio, 159*ratio,3*ratio, wallOptions)
+    Body.rotate(wall13, 10*deg)
+
+    
+    
+    // const ellipse3 = Bodies.fromVertices(80*ratio, 193*ratio, createEllipseVerticesArray(0.1+(ratio-1)/100,60*ratio), wallOptions, 5)
+    // Body.rotate(ellipse3, Math.PI / 4)
+    // const ellipse4 = Bodies.fromVertices(240*ratio, 193*ratio, createEllipseVerticesArray(0.1+(ratio-1)/100,60*ratio), wallOptions, 5)
+    // Body.rotate(ellipse4, -Math.PI / 4)
+    add([wall1,wall2,wall3,wall4,wall5,wall6,wall7,wall8,wall9,wall10,wall11,wall12,wall13,wall14])
+
+    // for (let i = 2; i <= 5; i++) {
+    //   const yPosition = (416*ratio) + (i - 2) * 26 * ratio;
+    //   add(createCircleStack(yPosition, i));
+    // }
+    add([
+      Bodies.circle(165.5*ratio,424.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(199.5*ratio,424.5*ratio,8.5*ratio,wallOptions),
+
+      Bodies.circle(148.5*ratio,450.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(182.5*ratio,450.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(216.5*ratio,450.5*ratio,8.5*ratio,wallOptions),
+      
+      Bodies.circle(131.5*ratio,477.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(165.5*ratio,477.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(199.5*ratio,477.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(233.5*ratio,477.5*ratio,8.5*ratio,wallOptions),
+
+      Bodies.circle(114.5*ratio,503.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(147.5*ratio,503.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(181.5*ratio,503.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(215.5*ratio,503.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(249.5*ratio,503.5*ratio,8.5*ratio,wallOptions),
+
+      Bodies.circle(97.5*ratio,530.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(131.5*ratio,530.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(165.5*ratio,530.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(199.5*ratio,530.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(233.5*ratio,530.5*ratio,8.5*ratio,wallOptions),
+      Bodies.circle(267.5*ratio,530.5*ratio,8.5*ratio,wallOptions),
+    ])
+    add(Bodies.rectangle(cw / 2, ch+40, 102*ratio, 82, {label: 'dead', isStatic: true, render:{fillStyle: '#ff0000'}, collisionFilter: {mask: 0x001}}))
+    add([
+      Bodies.circle(29*ratio,60*ratio,6*ratio,wallOptions),
+      Bodies.circle(336*ratio,60*ratio,6*ratio,wallOptions),
+      Bodies.circle(29*ratio,143*ratio,6*ratio,wallOptions),
+      Bodies.circle(336*ratio,143*ratio,6*ratio,wallOptions),
+      Bodies.circle(142*ratio,279*ratio,6*ratio,wallOptions),
+      Bodies.circle(221*ratio,279*ratio,6*ratio,wallOptions),
+      Bodies.circle(161*ratio,381*ratio,5*ratio,wallOptions),
+      Bodies.circle(205*ratio,381*ratio,5*ratio,wallOptions),
+      Bodies.circle(131*ratio,571*ratio,6*ratio,wallOptions),
+      Bodies.circle(233*ratio,571*ratio,6*ratio,wallOptions),
+      Bodies.circle(181.5*ratio,107.5*ratio,11.5*ratio,wallOptions)
+    ])
+    var triangleVertices = [
+      { x: 168*ratio, y: 144*ratio }, // Top point
+      { x: 196 * ratio, y: 144*ratio }, // Left point
+      { x: 182 * ratio, y: 172 * ratio }  // Right point
+    ];
+    add(Bodies.fromVertices(182*ratio,158*ratio,triangleVertices,{
+      isStatic:true,
+      render: {
+          fillStyle: '#045AFF',
+          strokeStyle: '#045AFF',
+          lineWidth: 2
+      }
+    }))
   };
 
   const add = (body) => {
@@ -136,8 +208,8 @@ function Game () {
   }
 
   const createCircleStack = (y, count) => {
-    return Composites.stack((cw - (12 * count + 11 * (count - 1)) * ratio) / 2, y, count, 1, 11 * ratio, 0, (x, y) =>
-      Bodies.circle(x, y, 6 * ratio, { friction: 0.001, restitution: 0.5,  isStatic: true, label: 'wall', render: { fillStyle: '#B45AD3' }, collisionFilter: { mask: 0x001 } })
+    return Composites.stack((cw - (17 * count + 17 * (count - 1)) * ratio) / 2, y, count, 1, 17 * ratio, 0, (x, y) =>
+      Bodies.circle(x, y, 8.5 * ratio, { friction: 0.001, restitution: 0.5,  isStatic: true, label: 'wall', render: { fillStyle: '#045aff' }, collisionFilter: { mask: 0x001 } })
     );
   };
 
@@ -194,8 +266,8 @@ function Game () {
     }, 20);
   }
 
-  const rotateHandle = (handle) => {
-    let speed=0.015;
+  const rotateHandle = (handle, direction=1) => {
+    let speed=0.015*direction;
     setInterval(() => {
       Body.rotate(handle, speed);
     }, 20);
@@ -204,40 +276,36 @@ function Game () {
   const addHandles = () => {
     const wallOptions = {label: 'wall', isStatic: true, render:{fillStyle: '#045aff'}, collisionFilter: {mask: 0x001}}
 
-    const rect = Bodies.rectangle(160*ratio,145*ratio,170*ratio,8*ratio, wallOptions)
-    add(rect)
-    movingHandle(rect, Math.PI / 6, -Math.PI / 6)
-    const rectangles = [];
-    for (let i = 0; i < 4; i++) {
-      const rect = Bodies.rectangle(160 * ratio, 232 * ratio, 60 * ratio, 5 * ratio, wallOptions);
-      Body.rotate(rect, (Math.PI / 4) * i);
-      rectangles.push(rect);
-      rotateHandle(rect)
-    }
-    add(rectangles)
-
-    let ellipse1 = Bodies.fromVertices(119*ratio, 313*ratio, createEllipseVerticesArray(0.1+(ratio-1)/100,40*ratio), wallOptions, 5);
-    let ellipse2 = Bodies.fromVertices(201*ratio, 313*ratio, createEllipseVerticesArray(0.1+(ratio-1)/100,40*ratio), wallOptions, 5);
-    add([ellipse1, ellipse2]);
-    rotateHandle(ellipse1)
-    Body.rotate(ellipse2, Math.PI / 4 * 3)
-    rotateHandle(ellipse2)
+   
+    const deg = Math.PI / 180
+    const cross1_1 = Bodies.rectangle(141*ratio,234*ratio,70*ratio,10*ratio,wallOptions)
+    const cross1_2 = Bodies.rectangle(141*ratio,234*ratio,70*ratio,10*ratio,wallOptions)
+    Body.rotate(cross1_2,90*deg)
+    add([cross1_1, cross1_2])
+    rotateHandle(cross1_1,-1)
+    rotateHandle(cross1_2,-1)
+    const cross2_1 = Bodies.rectangle(225*ratio,234*ratio,70*ratio,10*ratio,wallOptions)
+    const cross2_2 = Bodies.rectangle(225*ratio,234*ratio,70*ratio,10*ratio,wallOptions)
+    Body.rotate(cross2_2,90*deg)
+    add([cross2_1, cross2_2])
+    rotateHandle(cross2_1)
+    rotateHandle(cross2_2)
 
     const positions = [
-      { x: 10 * ratio, y: [460.5, 340.5, 220.5, 100.5] },
-      { x: 310 * ratio, y: [460.5, 340.5, 220.5, 100.5] },
+      { x: 14 * ratio, y: [580.5, 460.5, 340.5, 220.5, 100.5] },
+      { x: (defaultWidth-14) * ratio, y: [580.5, 460.5, 340.5, 220.5, 100.5] },
     ];
     
     const bodies = positions.flatMap(({ x, y }) =>
-      y.map((yPos) => Bodies.rectangle(x, yPos * ratio, 20 * ratio, 5 * ratio, wallOptions))
+      y.map((yPos) => Bodies.rectangle(x, yPos * ratio, 28 * ratio, 5 * ratio, wallOptions))
     );
     
     add(bodies);
     
-    bodies.forEach((body, index) => {
-      const direction = index / 4 < 1 ? Math.PI / 60 : -Math.PI / 60;
-      Body.rotate(body, direction);
-    });
+    // bodies.forEach((body, index) => {
+    //   const direction = index / 4 < 1 ? Math.PI / 60 : -Math.PI / 60;
+    //   Body.rotate(body, direction);
+    // });
     
     setInterval(() => {
       bodies.forEach((body) => {
@@ -249,14 +317,18 @@ function Game () {
       });
     }, 20);
 
-    const triangle2 = Bodies.polygon(160*ratio,137*ratio,3,10*ratio,wallOptions)
-    Body.rotate(triangle2, Math.PI / 2)
-    add(triangle2)
+  
 
     add([
-      Bodies.circle(119*ratio,313*ratio,8*ratio,wallOptions),
-      Bodies.circle(201*ratio,313*ratio,8*ratio,wallOptions),    
+      Bodies.circle(80*ratio,281*ratio,8*ratio,wallOptions),
+      Bodies.circle(281*ratio,281*ratio,8*ratio,wallOptions),    
     ])
+
+    const handle3 = Bodies.rectangle(80*ratio,281*ratio,60*ratio,3*ratio,wallOptions)
+    const handle4 = Bodies.rectangle(281*ratio,281*ratio,60*ratio,3*ratio,wallOptions)
+    add([handle3,handle4])
+    rotateHandle(handle3,-1)
+    rotateHandle(handle4)
   };
 
   const handleCollisionEvent = () => {
