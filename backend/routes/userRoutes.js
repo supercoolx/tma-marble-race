@@ -20,13 +20,19 @@ const {
 
     getAvatarImage,
     claimDailyReward,
-
+    buyMarble,
+    payMarble,
+    winMarble
 } = require('../controllers/userController');
 
 router.get('/get/:userid', authenticateUser, getUser);
 router.get('/friends/:userid', authenticateUser, getAllFriends);
 router.get('/ranking/:userid/:type', authenticateUser, getLeaderboard);
 router.get('/count/all', authenticateUser, getAllUserCount);
+
+router.post('/buyMarble',authenticateUser, buyMarble);
+router.post('/payMarble',authenticateUser,payMarble);
+router.post('/winMarble',authenticateUser,winMarble);
 
 router.post('/connect_wallet', authenticateUser, connectWallet);
 router.post('/jointg', authenticateUser, joinTelegram);

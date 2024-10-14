@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useInitData } from '@telegram-apps/sdk-react';
 import Balance from '@/components/Balance';
 import Footer from '@/components/Footer';
+import API from '@/libs/api';
+import { toast } from 'react-toastify';
 
 export default function Buy() {
     const { user } = useInitData();
     
     const [items, setItems] = useState([]);
-
+    const [reloading, setReloading] = useState(false)
     useEffect(() => {
         setItems([
             { value:20, price:20},
@@ -19,16 +21,27 @@ export default function Buy() {
         ])
     },[])
 
+    const handleBuy = (item) => (e) => {
+        e.preventDefault()
+        API.post('/users/buyMarble',{userid:user.id,price:item.price,balance: item.value})
+            .then(res => {
+                if (res.data.success)
+                    setReloading(true)
+                else
+                    toast(res.data.msg)
+            })
+    }
+
     return (
         <div className='flex flex-col pb-[85px]'>
-            <Balance/>
+            <Balance reloading = {reloading} setReloading={setReloading}/>
             <div id="body_buy">
                 <div id="header" className='text-center mt-[19px] mb-[15px]'>
                     <span className='font-roboto text-[#fff] text-[18px] font-bold'>Buy Marbles</span>
                 </div>
                 <div className='mx-[26px] grid grid-cols-2 gap-4'>
                     {items.map((item,index) => (
-                        <div key={index} className='flex flex-col cursor-pointer'>
+                        <div key={index} onClick={handleBuy(item)} className='flex flex-col cursor-pointer'>
                             <div className='flex flex-col items-center bg-[#1B1A21] rounded-tl-[12.8px] rounded-tr-[12.8px] border-[#6E6E6E] border-[1px] pt-[10px] pb-[8px]'>
                                 <div>
                                     <span className='font-roboto text-[21px] text-[#fff] font-bold'>{item.value}</span>

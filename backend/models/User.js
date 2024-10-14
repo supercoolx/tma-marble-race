@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
   
   token: { type: Number, default: 0 },
   balance: { type: Number, default: 0 },
-  
+  tge: {type:Number, default: 1000},
 });
 
 const User = mongoose.model('User', UserSchema);

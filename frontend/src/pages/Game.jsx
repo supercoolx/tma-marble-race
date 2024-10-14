@@ -1,3 +1,5 @@
+import API from '@/libs/api';
+import { useInitData } from '@telegram-apps/sdk-react';
 import Matter, { Engine, Runner, Render, Composite, Composites, Common, Bodies, Body } from 'matter-js'
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -5,6 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 function Game () {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const {user} = useInitData();
   const [ton, setTon] = useState()
   const [room, setRoom] = useState()
   const [memberCountInRoom, setMemberCountInRoom] = useState()
@@ -101,8 +104,8 @@ function Game () {
       Bodies.rectangle(cw / 2, -40, cw, 81, wallOptions),
       Bodies.rectangle(28.5*ratio,308.5*ratio,3*ratio,503*ratio, wallOptions),
       Bodies.rectangle(335.5*ratio,304.5*ratio,3*ratio,497*ratio, wallOptions),
-      Bodies.rectangle(130.5*ratio,592.5*ratio,3*ratio,47*ratio, wallOptions),
-      Bodies.rectangle(232.5*ratio,592.5*ratio,3*ratio,47*ratio, wallOptions),
+      Bodies.rectangle(130.5*ratio,592.5*ratio,5.6*ratio,47*ratio, wallOptions),
+      Bodies.rectangle(232.5*ratio,592.5*ratio,5.6*ratio,47*ratio, wallOptions),
     ])
 
     const deg = Math.PI / 180
@@ -174,7 +177,7 @@ function Game () {
       Bodies.circle(233.5*ratio,530.5*ratio,8.5*ratio,wallOptions),
       Bodies.circle(267.5*ratio,530.5*ratio,8.5*ratio,wallOptions),
     ])
-    add(Bodies.rectangle(cw / 2, ch+40, 102*ratio, 82, {label: 'dead', isStatic: true, render:{fillStyle: '#ff0000'}, collisionFilter: {mask: 0x001}}))
+    add(Bodies.rectangle(cw / 2, ch+40, 122*ratio, 82, {label: 'dead', isStatic: true, render:{fillStyle: '#ff0000'}, collisionFilter: {mask: 0x001}}))
     add([
       Bodies.circle(29*ratio,60*ratio,6*ratio,wallOptions),
       Bodies.circle(336*ratio,60*ratio,6*ratio,wallOptions),
@@ -193,14 +196,16 @@ function Game () {
       { x: 196 * ratio, y: 144*ratio }, // Left point
       { x: 182 * ratio, y: 172 * ratio }  // Right point
     ];
-    add(Bodies.fromVertices(182*ratio,158*ratio,triangleVertices,{
+    var triangle1 = Bodies.fromVertices(182*ratio,158*ratio,triangleVertices,{
       isStatic:true,
       render: {
           fillStyle: '#045AFF',
           strokeStyle: '#045AFF',
           lineWidth: 2
       }
-    }))
+    })
+    add(triangle1)
+    rotateHandle(triangle1)
     var triangleVertices = [
       { x: 0*ratio, y: 0*ratio }, // Top point
       { x: 90 * ratio, y: 0*ratio }, // Left point
@@ -300,7 +305,7 @@ function Game () {
   }
 
   const addHandles = () => {
-    const wallOptions = {label: 'wall', isStatic: true, render:{fillStyle: '#045aff'}, collisionFilter: {mask: 0x001}}
+    const wallOptions = {label: 'wall',density: 0.8, restitution: 0.6, isStatic: true, render:{fillStyle: '#045aff'}, collisionFilter: {mask: 0x001}}
 
    
     const deg = Math.PI / 180
@@ -372,9 +377,12 @@ function Game () {
           }
           if (temp == myCount){
             if(rank.length == 100){
-              setWinner('You won!')
+              API.post("/users/winMarble",{userid:user.id, balance: ton*100}).then(res=>{
+                setWinner('You won!')
+              })
             }
             setWinner('You Lose!')
+            temp=0;
           }
         }
       });

@@ -3,13 +3,18 @@ import Balance from '@/components/Balance';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '@/components/Footer';
 import { Common } from 'matter-js'
+import { useInitData } from '@telegram-apps/sdk-react';
+import API from '@/libs/api';
+import { toast } from 'react-toastify';
 
 function EnterCount () {
     const navigate = useNavigate();
+    const { user } = useInitData();
     const { state } = useLocation();
     const [price] = useState(Number(state.price)||1)
     const [count, setCount] = useState(1)
-
+    const [balance, setBalance] = useState(0);
+    const [reloading, setReloading] = useState(false)
     const [ton, setTon] = useState(0);
     const [room, setRoom] = useState(0);
     const [memberCountInRoom, setMemberCountInRoom] = useState(0);
@@ -25,13 +30,27 @@ function EnterCount () {
     },[state])
 
     useEffect(() => {
+        API.get(`/users/get/${user.id}`)
+            .then(res => {
+                setBalance(res.data.balance)
+            })
+    }, [user])
+
+    useEffect(() => {
         if (users.length == 100){
             navigate('/game',{state:{ton,room,memberCountInRoom,myIndex,myCount:count,users}})
         }
     },[users])
     const handlePlayButton = (e) => {
         e.preventDefault();
-        getUsersData()
+        if (count*price > balance){
+            toast("You don't have enough balance. Please buy $Marble")
+        }else{
+            API.post('/users/payMarble',{userid:user.id,balance:count*price}).then(res=>{
+                if (res.data.success)
+                    getUsersData()
+            })
+        }
     }
 
     const getUsersData = () => {
@@ -63,11 +82,6 @@ function EnterCount () {
         }
     }
 
-
-    const handleNavigate = (e) => {
-        e.preventDefault()
-        navigate('/go',{state:{price,count}})
-    }
 
     const handleMinusButton = () =>{
         if (count > 1)

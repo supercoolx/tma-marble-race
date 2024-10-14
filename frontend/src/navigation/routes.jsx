@@ -7,8 +7,8 @@ import Race from '@/pages/Race';
 import Invite from '@/pages/Invite';
 
 export const routes = [
-  { path: '/', Component: Buy },
-  { path: '/menu', Component: Menu },
+  { path: '/buy', Component: Buy },
+  { path: '/', Component: Menu },
   { path: '/game', Component: Game },
   { path: '/ruble', Component: RubleMenu },
   { path: '/enterCount', Component: EnterCount },

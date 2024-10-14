@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="flex flex-row justify-center">
             <div className="flex fixed bottom-2 flex-row justify-between px-[37px] bg-[#1B1A21] py-[13px] rounded-[21.4px] w-[96%]">
                 <div className="flex flex-col items-center justify-start">
-                    <Link to="/menu" className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-transform duration-300`}>
+                    <Link to="/" className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-transform duration-300`}>
                         <svg className="w-[24px] h-[24px]" fill="#979797" preserveAspectRatio="xMidYMid meet" data-bbox="27.5 28 145 144.001" viewBox="27.5 28 145 144.001" height="200" width="200" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" aria-hidden="true" aria-label="">
                             <g>
                                 <path d="M105.937 30.262a8.923 8.923 0 0 0-11.875 0L30.495 86.986c-2.79 2.492-3.732 6.356-2.395 9.844 1.337 3.488 4.608 5.745 8.335 5.745h9.831v60.501c0 4.922 4.002 8.925 8.922 8.925h31.055c4.79 0 8.686-3.897 8.686-8.689v-24.898h12.197v24.898c0 4.792 3.896 8.689 8.681 8.689h29.006c4.92 0 8.922-4.003 8.922-8.925v-60.501h9.831c3.727 0 6.998-2.256 8.335-5.745 1.337-3.488.394-7.351-2.395-9.844l-63.569-56.724zm4.545 96.109H91.571c-4.786 0-8.681 3.897-8.681 8.689v24.898H58.304V90.532H44.611l55.387-49.425 55.392 49.425h-13.693v69.425h-22.533V135.06c0-4.792-3.896-8.689-8.682-8.689z" data-color="1"></path>
@@ -18,7 +18,7 @@ export default function Footer() {
                     <div className="text-[12px] font-manrope font-medium leading-none text-center text-[#C2C2C2] mt-[7px]">Home</div>
                 </div>
                 <div className="flex flex-col items-center justify-start">
-                    <Link to="/home" className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-transform duration-300`}>
+                    <Link to="/buy" className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-transform duration-300`}>
                         <svg className="w-[24px] h-[24px]" fill="#979797" preserveAspectRatio="xMidYMid meet" data-bbox="10 25 180 150" viewBox="10 25 180 150" height="200" width="200" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" aria-hidden="true" aria-label="">
                             <g>
                                 <path d="M142.229 44.161c1.984 2.71 3.872 5.516 5.518 8.468 21.344 9.435 36.252 30.823 36.252 55.597 0 33.484-27.249 60.726-60.742 60.726-5.13 0-10.116-.629-14.859-1.839-3.098 1.258-6.244 2.371-9.486 3.29A66.794 66.794 0 0 0 123.257 175C160.089 175 190 145.048 190 108.226c.048-30.242-20.135-55.839-47.771-64.065z" data-color="1"></path>

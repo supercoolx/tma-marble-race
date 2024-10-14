@@ -13,7 +13,6 @@ const { isUserTGJoined } = require('../helper/botHelper');
 const getUser = async (req, res) => {
   const { userid } = req.params;
   const user = await User.findOne({ userid });
-  await user.updateEnergy();
   res.status(StatusCodes.OK).json(user);
 }
 
@@ -32,6 +31,35 @@ const getAllUserCount = async (req, res) => {
   const userCount = await User.countDocuments();
   res.status(StatusCodes.OK).json({count: userCount});
 };
+
+const buyMarble = async (req, res) => {
+  const {userid,price, balance} = req.body;
+  const user = await User.findOne({userid});
+  if (user.tge < price){
+    res.status(StatusCodes.OK).json({success:false,msg:`You don't have enough @TGE to buy balance.`})
+  }else{
+    user.balance += balance;
+    user.tge -= price;
+    user.save()
+    res.status(StatusCodes.OK).json({success:true,user})
+  }
+}
+
+const payMarble = async (req,res) => {
+  const {userid,balance} = req.body;
+  const user = await User.findOne({userid});
+  user.balance -= balance;
+  user.save()
+  res.status(StatusCodes.OK).json({success:true,user})
+}
+
+const winMarble = async (req,res) => {
+  const {userid,balance} = req.body;
+  const user = await User.findOne({userid});
+  user.balance += balance;
+  user.save()
+  res.status(StatusCodes.OK).json({success:true,user})
+}
 
 const connectWallet = async (req, res) => {
   const { userid } = req.body;
@@ -306,4 +334,7 @@ module.exports = {
   getAvatarImage,
 
   claimDailyReward,
+  buyMarble,
+  payMarble,
+  winMarble
 };
