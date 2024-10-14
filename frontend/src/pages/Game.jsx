@@ -131,9 +131,9 @@ function Game () {
     Body.rotate(wall10, 32*deg)
     const wall11 = Bodies.rectangle(249.5*ratio, 460.5*ratio, 3*ratio,191*ratio, wallOptions)
     Body.rotate(wall11, -31*deg)
-    const wall12 = Bodies.rectangle(67*ratio, 582.5*ratio, 134*ratio,3*ratio, wallOptions)
+    const wall12 = Bodies.rectangle(67*ratio, 582.5*ratio, 134*ratio,5.6*ratio, wallOptions)
     Body.rotate(wall12, -10*deg)
-    const wall13 = Bodies.rectangle(312.5*ratio, 585.5*ratio, 159*ratio,3*ratio, wallOptions)
+    const wall13 = Bodies.rectangle(312.5*ratio, 585.5*ratio, 159*ratio,5.6*ratio, wallOptions)
     Body.rotate(wall13, 10*deg)
 
     
@@ -194,6 +194,32 @@ function Game () {
       { x: 182 * ratio, y: 172 * ratio }  // Right point
     ];
     add(Bodies.fromVertices(182*ratio,158*ratio,triangleVertices,{
+      isStatic:true,
+      render: {
+          fillStyle: '#045AFF',
+          strokeStyle: '#045AFF',
+          lineWidth: 2
+      }
+    }))
+    var triangleVertices = [
+      { x: 0*ratio, y: 0*ratio }, // Top point
+      { x: 90 * ratio, y: 0*ratio }, // Left point
+      { x: 0 * ratio, y: 90 * ratio }  // Right point
+    ];
+    add(Bodies.fromVertices(2.25*ratio,2.25*ratio,triangleVertices,{
+      isStatic:true,
+      render: {
+          fillStyle: '#045AFF',
+          strokeStyle: '#045AFF',
+          lineWidth: 2
+      }
+    }))
+    var triangleVertices = [
+      { x: (defaultWidth-90)*ratio, y: 0*ratio }, // Top point
+      { x: defaultWidth* ratio, y: 0*ratio }, // Left point
+      { x: (defaultWidth) * ratio, y: 90 * ratio }  // Right point
+    ];
+    add(Bodies.fromVertices((defaultWidth-2.25)*ratio,2.25*ratio,triangleVertices,{
       isStatic:true,
       render: {
           fillStyle: '#045AFF',
