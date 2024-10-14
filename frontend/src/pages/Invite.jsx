@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { useInitData, useUtils } from "@telegram-apps/sdk-react";
 import { LINK } from "@/libs/constants";
 import API from "@/libs/api";
-import Avatar from '@/components/Avatar';
 import Balance from '@/components/Balance';
 import Footer from '@/components/Footer';
 

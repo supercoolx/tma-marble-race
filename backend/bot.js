@@ -51,7 +51,7 @@ const login = async (userid, username, firstname, lastname, is_premium, inviter)
           };
           
           const inviteBonus = calcInviteBonus(inviteUser.friends.length, is_premium);
-          inviteUser.addOnion(inviteBonus);
+          inviteUser.balance += inviteBonus;
           await inviteUser.save();
         }
       }

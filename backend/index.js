@@ -10,12 +10,14 @@ const connectDB = require('./db/connect');
 //  routers
 const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
+const roomRouter = require('./routes/roomRouter');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/room/', roomRouter);
 
 app.use(express.static('../frontend/dist'));
 app.get('*', function(req, res) {
@@ -35,21 +37,3 @@ const start = async () => {
 };
 
 start();
-
-//reset Cron job
-const cron = require("node-cron");
-const User = require('./models/User');
-const resetWeekly = async () => {
-  await User.updateMany({}, {$set: { ["weeklyScore"]: 0}});
-}
-const resetMonthly = async () => {
-  await User.updateMany({}, {$set: { ["monthlyScore"]: 0}});
-}
-cron.schedule("0 0 1 * *",resetMonthly,{
-  schedule: true,
-  timezone: "America/New_York"
-})
-cron.schedule("0 0 * * SUN",resetWeekly,{
-  schedule: true,
-  timezone: "America/New_York"
-})

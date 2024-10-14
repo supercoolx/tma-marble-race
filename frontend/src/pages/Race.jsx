@@ -91,27 +91,7 @@ function Race () {
     else
       engine.current.gravity.scale = 0
     handleCollisionEvent()
-    // Create a mouse constraint
-    const mouse = Mouse.create(render.canvas);
-    const mouseConstraint = MouseConstraint.create(engine.current, {
-      mouse: mouse,
-      constraint: {
-        render: {
-          visible: false
-        }
-      }
-    });
     
-    add(mouseConstraint);
-    render.mouse = mouse
-    
-    
-    Events.on(mouseConstraint, 'mousedown', (event) => {
-        const mousePosition = event.mouse.position;
-        console.log('Mouse click at:', mousePosition);
-        //283*ratio, 556*ratio, 146*ratio, 15*ratio
-
-    });
     var allBodies = Composite.allBodies(world);
     for (var i = 0; i < allBodies.length; i += 1) {
       allBodies[i].plugin.wrap = {

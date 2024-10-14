@@ -5,7 +5,6 @@ const { StatusCodes } = require('http-status-codes');
 
 const User = require('../models/User');
 const Follow = require('../models/Follow');
-const BoostItem = require('../models/BoostItem');
 
 const logger = require('../helper/logger');
 const { BONUS, TELEGRAM, LEADERBOARD_SHOW_USER_COUNT } = require('../helper/constants');
@@ -43,10 +42,10 @@ const connectWallet = async (req, res) => {
     }
     user.walletConnected = true;
     const bonus = BONUS.WALLET_CONNECT;
-    user.addOnion(bonus);
+    user.balance += bonus;
 
     await user.save();
-    return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'Received wallet connect bonus', onion: user.onion, bonus: bonus});
+    return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'Received wallet connect bonus', balance: user.balance, bonus: bonus});
   }
   return res.status(StatusCodes.OK).json({success: false, status: 'nouser', msg: 'There is no userid!'});
 }
@@ -71,10 +70,10 @@ const joinTelegram = async (req, res) => {
       bonus = BONUS.JOIN_TG_GROUP;
       user.telegramGroupJoined = true;
     }
-    user.addOnion(bonus);
+    user.balance += bonus;
 
     await user.save();
-    return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'received telegram joined bonus', onion: user.onion, bonus: bonus});
+    return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'received telegram joined bonus', balance: user.balance, bonus: bonus});
   }
   return res.status(StatusCodes.OK).json({success: false, status: 'nouser', msg: 'there is no userid!'});
 };
@@ -100,10 +99,10 @@ const followX = async (req, res) => {
   await follow.save();
 
   user.xFollowed = true;
-  user.addOnion(BONUS.FOLLOW_X_ACCOUNT);
+  user.balance += BONUS.FOLLOW_X_ACCOUNT;
 
   await user.save();
-  return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'Received follow X bonus', onion: user.onion, bonus: BONUS.FOLLOW_X_ACCOUNT});
+  return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'Received follow X bonus', balance: user.balance, bonus: BONUS.FOLLOW_X_ACCOUNT});
 };
 
 const retweet = async (req, res) => {
@@ -129,10 +128,10 @@ const retweet = async (req, res) => {
   await follow.save();
 
   user.xTweet = true;
-  user.addOnion(BONUS.RETWEET_POST);
+  user.balance += BONUS.RETWEET_POST;
 
   await user.save();
-  return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'received visit website bonus', onion: user.onion, bonus: BONUS.RETWEET_POST});
+  return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'received visit website bonus', balance: user.balance, bonus: BONUS.RETWEET_POST});
 };
 
 const subscribe_youtube = async (req, res) => {
@@ -159,10 +158,10 @@ const subscribe_youtube = async (req, res) => {
   await follow.save();
 
   user.youtubeSubscribed = true;
-  user.addOnion(BONUS.SUBSCRIBE_YOUTUBE);
+  user.balance += BONUS.SUBSCRIBE_YOUTUBE;
 
   await user.save();
-  return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'received subscribe youtube bonus', onion: user.onion, bonus: BONUS.SUBSCRIBE_YOUTUBE});
+  return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'received subscribe youtube bonus', balance: user.balance, bonus: BONUS.SUBSCRIBE_YOUTUBE});
 };
 
 const visit_website = async (req, res) => {
@@ -192,10 +191,10 @@ const visit_website = async (req, res) => {
   await follow.save();
 
   user.visitWebSite = true;
-  user.addOnion(BONUS.VISIT_WEBSITE);
+  user.balance += BONUS.VISIT_WEBSITE;
 
   await user.save();
-  return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'Received visit website bonus', onion: user.onion, bonus: BONUS.VISIT_WEBSITE});
+  return res.status(StatusCodes.OK).json({success: true, status: 'success', msg: 'Received visit website bonus', balance: user.balance, bonus: BONUS.VISIT_WEBSITE});
 };
 
 const follow_task_do = async (req, res) => {
@@ -243,7 +242,7 @@ const claimDailyReward = async (req, res) => {
 
     var status = 'notyet';
     if (timeSinceLastReward >= oneDay) {
-      user.addOnion(reward);
+      user.balance += reward;
       user.lastRewardDate = now;
       if(req.body.status == 1) {
         await user.save();
@@ -290,151 +289,6 @@ const getLeaderboard = async (req, res) => {
   }
 }
 
-const updateUserByTap = async (req,res) =>{
-  const {userid} = req.body;
-  var user = await User.findOne({userid}).select('-password');
-  if(!user) {
-    return res.status(StatusCodes.OK).json({success: false, status: 'nouser', msg: 'Not found user!'});
-  }
-  if(user.energy < user.loseEnergyPerTap) {
-    return res.status(StatusCodes.OK).json({success: false, status: 'noenergy', msg: 'There is no energy!'});
-  }
-
-  user.addOnion(user.earnPerTap);
-  user.energy -= user.loseEnergyPerTap;
-  if(user.energy < 0) {
-    user.energy = 0;
-  }
-  user.lastEnergyUpdate = Date.now();
-  await user.save();
-
-  return res.status(StatusCodes.OK).json({success: true, onion: user.onion, energy: user.energy});
-}
-
-const growUp = async (req,res) => {
-  const {userid} = req.body;
-  var user = await User.findOne({userid}).select('-password');
-  if(!user) {
-    return res.status(StatusCodes.OK).json({success: false, status: 'nouser', msg: 'Not found user!'});
-  }
-
-  if (user.energy < user.maxEnergy){
-    const addValue = await user.calcEnergyInc();
-    user.energy += addValue; 
-    user.lastEnergyUpdate = Date.now();
-  }
-  await user.save();
-  
-  return res.status(StatusCodes.OK).json({success: true, energy: user.energy});
-}
-
-const purchaseBoost = async (req, res) => {
-  const { userid, boostid } = req.body;
-  const user = await User.findOne({ userid });
-  if(!user) {
-    return res.status(StatusCodes.OK).json({success: false, status: 'nouser', msg: 'Not found user!'});
-  }
-  const currentTime = new Date();
-  for (const boost of user.boosts) {
-    if (currentTime < boost.endTime) {
-      return res.status(StatusCodes.OK).json({success: false, status: 'exist', msg: 'You already buy boost item!'});
-    }
-  }
-  const boostItem = await BoostItem.findById(boostid);
-  if(!boostItem) {
-    return res.status(StatusCodes.OK).json({success: false, status: 'noboostitem', msg: 'Not found boost item!'});
-  }
-
-  var userBoost = null;
-  switch (boostItem.type) {
-    case 'one-time':
-      userBoost = { item: boostItem._id };
-      break;
-    case 'many-time':
-      userBoost = { item: boostItem._id, remainingUses: boostItem.maxUses };
-      break;
-    case 'forever':
-      userBoost = { item: boostItem._id };
-      break;
-    case 'period':
-      const currentTime = new Date();
-      const endTime = new Date(currentTime.getTime() + boostItem.period * 24 * 60 * 60 * 1000);
-      userBoost = { item: boostItem._id, endTime };
-      break;
-  }
-  if(userBoost) {
-    user.boosts.push(userBoost);
-    await user.save();
-  }
-  return res.status(StatusCodes.OK).json({success: true, boost: userBoost, msg: 'Purchase boost successfully!'});
-}
-
-const getAllBoost = async (req, res) => {
-  const boosts = await BoostItem.find({});
-  return res.status(StatusCodes.OK).json({boosts});
-}
-
-const addBoost = async (req, res) => {
-  const { userid, name, title, period, price } = req.body;
-  const boostItem = await BoostItem.findOne({name});
-  if(boostItem) {
-    return res.status(StatusCodes.OK).json({success: false, status: 'exist', msg: 'Boost name already exist!'});
-  }
-  await BoostItem.create({
-    name,
-    title,
-    period,
-    price
-  });
-  return res.status(StatusCodes.OK).json({status: true, msg: 'Boost add success!'});
-}
-
-const getMyBoost = async (req, res) => {
-  const { userid } = req.params;
-  const user = await User.findOne({ userid }).populate('boosts.item');
-  if(!user) {
-    return res.status(StatusCodes.OK).json({success: false, status: 'nouser', msg: 'Not found user!'});
-  }
-
-  const result = await User.aggregate([
-    { $match: { 'boosts.item': { $ne: null } } }, // Filter users with boosts
-    { $unwind: '$boosts' }, // Deconstruct boosts array
-    {
-      $lookup: {
-        from: 'boostitems', // The collection name for BoostItem
-        localField: 'boosts.item',
-        foreignField: '_id',
-        as: 'boostDetails'
-      }
-    },
-    { $unwind: '$boostDetails' }, // Deconstruct boostDetails array
-    {
-      $group: {
-        _id: null,
-        totalUsers: { $addToSet: '$userid' }, // Unique user IDs
-        totalPrice: { $sum: '$boostDetails.price' } // Sum of prices
-      }
-    },
-    {
-      $project: {
-        totalUsersCount: { $size: '$totalUsers' },
-        totalBoostsPrice: '$totalPrice'
-      }
-    }
-  ]);
-  const total = {
-    usersCount: result.length > 0 ? result[0].totalUsersCount.toString() : 0,
-    price: result.length > 0 ? result[0].totalBoostsPrice.toString() : 0
-  }
-
-  const currentTime = new Date();
-  for (const boost of user.boosts) {
-    if (currentTime < boost.endTime) {
-      return res.status(StatusCodes.OK).json({success: true, boost, total});
-    }
-  }
-  return res.status(StatusCodes.OK).json({success: false, status: 'noboost', total, msg: 'You did not buy boost!'});
-}
 module.exports = {
   getUser,
   getAllFriends,
@@ -452,11 +306,4 @@ module.exports = {
   getAvatarImage,
 
   claimDailyReward,
-  updateUserByTap,
-  growUp,
-
-  purchaseBoost,
-  getAllBoost,
-  addBoost,
-  getMyBoost,
 };

@@ -97,7 +97,7 @@ export default function Leaderboard() {
                         <div className="flex items-center gap-1 text-[12px] mt-[3px] leading-[16px] text-center">Your Tokens</div>
                     </div>
                     <div className="flex flex-col items-center justify-center px-[13px] py-[8px] bg-primary rounded-xl w-[102px]">
-                        <div className="font-semibold text-center font-inter text-[16px] leading-[19px]">#{self?.onion?.toLocaleString()}</div>
+                        <div className="font-semibold text-center font-inter text-[16px] leading-[19px]">#{self?.balance?.toLocaleString()}</div>
                         <div className="flex items-center gap-1 text-[12px] mt-[3px] leading-[16px] text-center">Your Marble</div>
                     </div>
                 </div>

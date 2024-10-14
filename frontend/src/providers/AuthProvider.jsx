@@ -14,7 +14,6 @@ const AuthProvider = ({ children }) => {
         API.post('/auth/login', { userid: user.id }).then((res) => {
             localStorage.setItem('token', `Bearer ${res.data.token}`);
             setAuthenticated(true);
-            console.log('User logined:', user.username, user.firstName, user.lastName);
         })
         .catch(console.error);
     }, [])
