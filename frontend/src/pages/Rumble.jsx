@@ -297,8 +297,8 @@ function Rumble () {
           userId:users[i].id,
           friction: 0.0001,
           frictionAir:0,
-          density: 0.3,
-          restitution: 0.8,
+          density: 0.9,
+          restitution: 0.6,
           render: render,
           collisionFilter: { mask: 0x001 }
         }
