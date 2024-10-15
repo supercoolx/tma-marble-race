@@ -30,6 +30,7 @@ function Rumble () {
   let render;
   let rank = [];
   let temp = 0;
+  let divider;
 
   useEffect(()=>{
     setTon(Number(state.ton || 1))
@@ -89,8 +90,11 @@ function Rumble () {
       setStartTitle(values[j++])
       if (j > values.length){
         clearInterval(startInterval)
-        if (memberCountInRoom == 100)
+        if (memberCountInRoom == 100){
           engine.current.gravity.scale = 0.0004
+          divider.render.visible = false
+          divider.collisionFilter = 0x002
+        }
       }
     },1000)
     handleCollisionEvent()
@@ -236,12 +240,16 @@ function Rumble () {
     add(Bodies.fromVertices((defaultWidth-2.25)*ratio,2.25*ratio,triangleVertices,{
       isStatic:true,
       render: {
-          fillStyle: '#045AFF',
-          strokeStyle: '#045AFF',
-          lineWidth: 2
+        fillStyle: '#045AFF',
+        strokeStyle: '#045AFF',
+        lineWidth: 2
       }
     }))
+    divider = Bodies.rectangle(defaultWidth / 2 * ratio, 45*ratio, cw, 5, wallOptions)
+    
+    add(divider)
   };
+
 
   const add = (body) => {
     Composite.add(world, body)
@@ -279,7 +287,7 @@ function Rumble () {
         // sprite: { texture: '/imgs/ball_other_optimized.png', xScale: 0.15625*ratio+cw/3000, yScale: 0.15625*ratio+cw/3000 }
         fillStyle: '#ffffff'
       }
-      stack.push(Bodies.circle(
+      const body = Bodies.circle(
         users[i].position.x,
         users[i].position.y,
         5*ratio + cw / 30000,
@@ -294,7 +302,9 @@ function Rumble () {
           render: render,
           collisionFilter: { mask: 0x001 }
         }
-      ))
+      )
+      stack.push(body)
+      // Body.applyForce(body,{x:cw/2,y:8},{x:0.01,y:0.001})
     }
     add(stack);
   };

@@ -61,7 +61,7 @@ function EnterCount () {
         for (let i = 0 ; i < count ; i++){
         const user = {
             id: '323233',
-            position: {x:Common.random((cw / 2 - 50), (cw / 2 + 50)), y:Common.random(18*ratio, 100*ratio)},
+            position: {x:Common.random((cw / 2 - 50), (cw / 2 + 50)), y:Common.random(8*ratio, 40*ratio)},
         }
         setUsers((prev) => [...prev, user])
         }
@@ -76,7 +76,7 @@ function EnterCount () {
             }while(flag)
             const user = {
                 id: userId,
-                position: {x:Common.random((cw / 2 - 50), (cw / 2 + 50)), y:Common.random(18*ratio, 100*ratio)},
+                position: {x:Common.random((cw / 2 - 50), (cw / 2 + 50)), y:Common.random(8*ratio, 40*ratio)},
             }
             setUsers((prev) => [...prev, user])
         }
