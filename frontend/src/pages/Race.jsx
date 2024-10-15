@@ -191,11 +191,11 @@ function Race () {
     Body.rotate(wall1, 8*deg)
     const wall2 = Bodies.rectangle(120.5*ratio,141.5*ratio,97*ratio,5*ratio, wallOptions)
     Body.rotate(wall2, -8*deg)
-
+    const angle1 = Common.random(0,90)
     const wall3 = Bodies.rectangle(39.5*ratio,156.5*ratio,56*ratio,10*ratio, wallOptions)
-    Body.rotate(wall3, -8*deg)
+    Body.rotate(wall3, -angle1*deg)
     const wall4 = Bodies.rectangle(39.5*ratio,156.5*ratio,56*ratio,10*ratio, wallOptions)
-    Body.rotate(wall4, -98*deg)
+    Body.rotate(wall4, -(angle1+90)*deg)
 
     rotateHandle(wall3,-1)
     rotateHandle(wall4,-1)
@@ -220,10 +220,11 @@ function Race () {
 
     const wall11 = Bodies.rectangle(40.5*ratio, 267.5*ratio,5.2*ratio,147*ratio,wallOptions)
     
+    const angle2 = Common.random(0,90)
     const wall14 = Bodies.rectangle(92*ratio,391*ratio,30*ratio,5.2*ratio, wallOptions)
-    Body.rotate(wall14, -8*deg)
+    Body.rotate(wall14, -angle2*deg)
     const wall15 = Bodies.rectangle(92*ratio,391*ratio,30*ratio,5.2*ratio, wallOptions)
-    Body.rotate(wall15, -98*deg)
+    Body.rotate(wall15, -(90+angle2)*deg)
 
     rotateHandle(wall14)
     rotateHandle(wall15)
@@ -283,11 +284,11 @@ function Race () {
 
     add([rw1,rw2,rw3,rw4,rw5,rw6,rw7,rw8,rw9,rw10,rw11,rw12,rw13,rw14,rw15,rw16,rw17])
 
-
+    const angle3 = Common.random(0,90)
     const rw18 = Bodies.rectangle(324*ratio,95*ratio,56*ratio,10*ratio, wallOptions)
-    Body.rotate(rw18, -8*deg)
+    Body.rotate(rw18, -angle3*deg)
     const rw19 = Bodies.rectangle(324*ratio,95*ratio,56*ratio,10*ratio, wallOptions)
-    Body.rotate(rw19, -98*deg)
+    Body.rotate(rw19, -(90+angle3)*deg)
 
     add([rw18,rw19])
     rotateHandle(rw18,-1)
