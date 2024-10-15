@@ -523,7 +523,7 @@ function Race () {
 
   const handleMenuButton = (e) => {
     e.preventDefault()
-    navigate('/')
+    navigate('/', {replace: true})
   }
   
   return (

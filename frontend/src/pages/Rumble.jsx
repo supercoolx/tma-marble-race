@@ -439,13 +439,13 @@ function Rumble () {
 
   const handleMenuButton = (e) => {
     e.preventDefault()
-    navigate('/')
+    navigate('/',{replace:true})
   }
   
   const handleClaim = (e) => {
     e.preventDefault()
     API.post("/users/winMarble",{userid:user.id, balance: ton*100}).then(res=>{
-      navigate('/')
+      navigate('/', {replace: true})
     })
   }
 
