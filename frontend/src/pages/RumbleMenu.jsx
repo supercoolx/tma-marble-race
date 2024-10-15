@@ -3,7 +3,7 @@ import Balance from '@/components/Balance';
 import { useNavigate } from 'react-router-dom';
 import Footer from '@/components/Footer';
 
-function RubleMenu () {
+function RumbleMenu () {
     const navigate = useNavigate();
     
     const handleNavigate = (price) => (e) => {
@@ -82,4 +82,4 @@ function RubleMenu () {
     )
 }
 
-export default RubleMenu;
+export default RumbleMenu;

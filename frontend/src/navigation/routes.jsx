@@ -1,17 +1,21 @@
 import Buy from '@/pages/Buy';
-import Menu from '@/pages/Menu';
-import Game from '@/pages/Game';
-import RubleMenu from '@/pages/RubleMenu';
+import GameMode from '@/pages/GameMode';
+import Rumble from '@/pages/Rumble';
+import RumbleMenu from '@/pages/RumbleMenu';
 import EnterCount from '@/pages/EnterCount';
 import Race from '@/pages/Race';
 import Invite from '@/pages/Invite';
+import RaceMenu from '@/pages/Racemenu';
+import PickColor from '@/pages/PickColor';
 
 export const routes = [
   { path: '/buy', Component: Buy },
-  { path: '/', Component: Menu },
-  { path: '/game', Component: Game },
-  { path: '/ruble', Component: RubleMenu },
+  { path: '/', Component: GameMode },
+  { path: '/rumble', Component: Rumble },
+  { path: '/rumbleMenu', Component: RumbleMenu },
   { path: '/enterCount', Component: EnterCount },
   { path: '/race', Component: Race},
-  { path: '/friend', Component: Invite}
+  { path: '/friend', Component: Invite},
+  { path: 'raceMenu', Component: RaceMenu},
+  { path: 'pickColor', Component: PickColor},
 ];

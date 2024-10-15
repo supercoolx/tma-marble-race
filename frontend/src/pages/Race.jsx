@@ -29,18 +29,19 @@ function Race () {
   let startHandler;
 
   useEffect(()=>{
-    setTon(Number(1))//setTon(Number(state.ton || 1))
-    setRoom(Number(715))//setRoom(Number(state.room || 0))
-    setMemberCountInRoom(5)//setMemberCountInRoom(Number(state.memberCountInRoom || 0))
-    setMyIndex(2)//setMyIndex(state.myIndex)
-    const userIds= ['763843','386343','873902','174942','374834']
-    const colors = ['#ffd700', '#e43292','#ff6b00','#2cca36', '#ff0219']
-    const startIndex = Common.random(0,4)
-    userIds.map((user, index) => {
-      const x = 23.5 + 11*index + 15 * index
-      const y = 21.5
-      setUsers(prev => [...prev,{id:user, position:{x,y}, color:colors[index]}])
-    })
+    setTon(Number(state.ton || 1))
+    setRoom(Number(state.room || 0))
+    setMemberCountInRoom(Number(state.memberCountInRoom || 0))
+    setMyIndex(state.myIndex)
+    setUsers(state.users)
+    // const userIds= ['763843','386343','873902','174942','374834']
+    // const colors = ['#ffd700', '#e43292','#ff6b00','#2cca36', '#ff0219']
+    // const startIndex = Common.random(0,4)
+    // userIds.map((user, index) => {
+    //   const x = 23.5 + 11*index + 15 * index
+    //   const y = 21.5
+    //   setUsers(prev => [...prev,{id:user, position:{x,y}, color:colors[index]}])
+    // })
   },[state])
 
   useEffect(() => {

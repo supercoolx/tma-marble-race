@@ -4,7 +4,7 @@ import Matter, { Engine, Runner, Render, Composite, Composites, Common, Bodies, 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-function Game () {
+function Rumble () {
   const { state } = useLocation();
   const navigate = useNavigate();
   const {user} = useInitData();
@@ -273,10 +273,11 @@ function Game () {
     for (let i = from; i < to; i++)
     {
       const render = users[i].id == myIndex ? {
-        sprite: { texture: '/imgs/ball_optimized.png', xScale: 0.15625*ratio+cw/3000, yScale: 0.15625*ratio+cw/3000 }
+        fillStyle:'#ff8801'
+        // sprite: { texture: '/imgs/ball_optimized.png', xScale: 0.15625*ratio+cw/3000, yScale: 0.15625*ratio+cw/3000 }
       }:{
-        sprite: { texture: '/imgs/ball_other_optimized.png', xScale: 0.15625*ratio+cw/3000, yScale: 0.15625*ratio+cw/3000 }
-        // fillStyle: myIndex == i ? '#0000ff' : '#ffffff'
+        // sprite: { texture: '/imgs/ball_other_optimized.png', xScale: 0.15625*ratio+cw/3000, yScale: 0.15625*ratio+cw/3000 }
+        fillStyle: '#ffffff'
       }
       stack.push(Bodies.circle(
         users[i].position.x,
@@ -509,4 +510,4 @@ function Game () {
   );
 }
 
-export default Game;
+export default Rumble;

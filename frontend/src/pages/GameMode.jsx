@@ -4,7 +4,7 @@ import { Common } from 'matter-js'
 import Balance from '@/components/Balance';
 import Footer from '@/components/Footer';
 
-function Menu () {
+function GameMode () {
   const navigate = useNavigate();
   const [ton, setTon] = useState(0);
   const [room, setRoom] = useState(0);
@@ -22,12 +22,12 @@ function Menu () {
 
   const handleRuble = (e) => {
     e.preventDefault();
-    navigate('/ruble')
+    navigate('/rumbleMenu')
   }
 
   const handleRace = (e) => {
     e.preventDefault();
-    navigate('/race')
+    navigate('/raceMenu')
   }
 
   const getUsersData = () => {
@@ -120,5 +120,5 @@ function Menu () {
   )
 }
 
-export default Menu;
+export default GameMode;
 
