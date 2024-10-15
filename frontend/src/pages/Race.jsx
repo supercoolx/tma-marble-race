@@ -476,8 +476,8 @@ function Race () {
           userId:user.id,
           friction: 0.0001,
           frictionAir: 0,
-          density: 0.3,
-          restitution: 0.8,
+          density: 0.9,
+          restitution: 0.6,
           isStatic:false,
           render: {fillStyle: user.color},
           collisionFilter: { mask: 0x001 }
