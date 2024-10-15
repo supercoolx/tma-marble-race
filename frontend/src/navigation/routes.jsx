@@ -5,7 +5,7 @@ import RumbleMenu from '@/pages/RumbleMenu';
 import EnterCount from '@/pages/EnterCount';
 import Race from '@/pages/Race';
 import Invite from '@/pages/Invite';
-import RaceMenu from '@/pages/Racemenu';
+import RaceMenu from '@/pages/RaceMenu';
 import PickColor from '@/pages/PickColor';
 
 export const routes = [
