@@ -2,8 +2,11 @@ import Matter, { Engine, Runner, Render, Composite, Composites, Common, Bodies, 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import 'pathseg/pathseg';
+import API from '@/libs/api';
+import { useInitData } from '@telegram-apps/sdk-react';
 
 function Race () {
+  const {user} = useInitData()
   const { state } = useLocation();
   const navigate = useNavigate();
   const [ton, setTon] = useState()
@@ -65,6 +68,11 @@ function Race () {
   useEffect(()=> {
     if (rank.length == 5){
       setWinner(rank[0].userId)
+      if (rank[0].userId == myIndex){
+        API.post("/users/winMarble",{userid:user.id, balance: ton*5}).then(res=>{
+          navigate('/', {replace: true})
+        })
+      }
     }
   },[rank])
 
