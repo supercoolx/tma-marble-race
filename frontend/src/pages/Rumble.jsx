@@ -123,9 +123,9 @@ function Rumble () {
     Body.rotate(wall1, 10*deg)
     const wall2 = Bodies.rectangle(268*ratio,72.5*ratio,130*ratio,3*ratio, wallOptions)
     Body.rotate(wall2, -10*deg)
-    const wall3 = Bodies.rectangle(114*ratio, 117.5*ratio, 130*ratio,3*ratio, wallOptions)
+    const wall3 = Bodies.rectangle(114*ratio, 117.5*ratio, 120*ratio,3*ratio, wallOptions)
     Body.rotate(wall3, -10*deg)
-    const wall4 = Bodies.rectangle(250*ratio, 117.5*ratio, 134*ratio,3*ratio, wallOptions)
+    const wall4 = Bodies.rectangle(250*ratio, 117.5*ratio, 120*ratio,3*ratio, wallOptions)
     Body.rotate(wall4, 10*deg)
     const wall5 = Bodies.rectangle(94*ratio, 155.5*ratio, 134*ratio,3*ratio, wallOptions)
     Body.rotate(wall5, 10*deg)
@@ -406,25 +406,25 @@ function Rumble () {
         }
       });
     });
-    Matter.Events.off(engine.current, 'collisionActive');
-    Matter.Events.on(engine.current, 'collisionActive', function (event) {
-      event.pairs.forEach(function (pair) {
-        const ball = pair.bodyA.label === 'ball' ? pair.bodyA : pair.bodyB.label === 'ball' ? pair.bodyB : null;
-        const wall = pair.bodyA.label === 'wall' ? pair.bodyA : pair.bodyB.label === 'wall' ? pair.bodyB : null;
-        const alive = pair.bodyA.label === 'alive' ? pair.bodyA : pair.bodyB.label === 'alive' ? pair.bodyB : null;
-        if (ball && wall) {
-          const velocity = ball.velocity;
-          if (velocity.x > 3)
-            Body.setVelocity(ball,{x:3, y: velocity.y})
-          if (velocity.y < 0.001){
-            Body.setPosition(ball,{x:ball.position.x-1, y:ball.position.y})
-          }
-        }
-        if (ball && alive){
-          Body.setPosition(ball,{x:Common.random((cw / 2 - 50), (cw / 2 + 50)),y:Common.random(60*ratio, 80*ratio)})
-        }
-      })
-    })
+    // Matter.Events.off(engine.current, 'collisionActive');
+    // Matter.Events.on(engine.current, 'collisionActive', function (event) {
+    //   event.pairs.forEach(function (pair) {
+    //     const ball = pair.bodyA.label === 'ball' ? pair.bodyA : pair.bodyB.label === 'ball' ? pair.bodyB : null;
+    //     const wall = pair.bodyA.label === 'wall' ? pair.bodyA : pair.bodyB.label === 'wall' ? pair.bodyB : null;
+    //     const alive = pair.bodyA.label === 'alive' ? pair.bodyA : pair.bodyB.label === 'alive' ? pair.bodyB : null;
+    //     if (ball && wall) {
+    //       const velocity = ball.velocity;
+    //       if (velocity.x > 3)
+    //         Body.setVelocity(ball,{x:3, y: velocity.y})
+    //       if (velocity.y < 0.001){
+    //         Body.setPosition(ball,{x:ball.position.x-1, y:ball.position.y})
+    //       }
+    //     }
+    //     if (ball && alive){
+    //       Body.setPosition(ball,{x:Common.random((cw / 2 - 50), (cw / 2 + 50)),y:Common.random(60*ratio, 80*ratio)})
+    //     }
+    //   })
+    // })
   }
 
   const handleMenuButton = (e) => {

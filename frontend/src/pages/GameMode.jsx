@@ -60,7 +60,7 @@ function GameMode () {
                 <span className='font-roboto text-[#fff] text-[18px] font-bold'>Game modes</span>
             </div>
             <div className='flex flex-col px-3 gap-3'>
-              <div onClick={handleRuble} className='flex flex-row items-center justify-between gap-3 bg-[#1B1A20] rounded-md p-3'>
+              <div onClick={handleRuble} className='flex flex-row items-center justify-between gap-3 bg-[#1B1A20] rounded-md p-3 cursor-pointer'>
                 <div className='bg-black border-[#8102FF] border-[2px] rounded-[281px] p-6'>
                   <svg className='w-[32px] h-[32px]' fill="#fff" preserveAspectRatio="xMidYMid meet" data-bbox="32.444 32.443 135.112 135.114" viewBox="32.444 32.443 135.112 135.114" height="200" width="200" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" aria-hidden="true" aria-label="">
                     <g>
@@ -76,7 +76,7 @@ function GameMode () {
                   <span className='font-roboto text-[#6E6E6E] text-[12px] font-bold'>Play with 100 Marbles, last marble that stays in the game wins the jackpot.</span>
                 </div>
               </div>
-              <div onClick={handleRace} className='flex flex-row items-center justify-between gap-3 bg-[#1B1A20] rounded-md p-3'>
+              <div onClick={handleRace} className='flex flex-row items-center justify-between gap-3 bg-[#1B1A20] rounded-md p-3 cursor-pointer'>
                 <div className='bg-black border-[#8102FF] border-[2px] rounded-[281px] p-6'>
                 <svg
                     className="w-[32px] h-[32px]"
