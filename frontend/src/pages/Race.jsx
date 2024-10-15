@@ -12,6 +12,8 @@ function Race () {
   const [myIndex, setMyIndex] = useState()
   const [users, setUsers] = useState([])
   const [winner, setWinner] = useState('')
+  const [startTitle, setStartTitle] = useState('3')
+
   const scene = useRef()
   const engine = useRef(Engine.create())
   const world = useMemo(()=>engine.current.world,[engine])
@@ -24,6 +26,7 @@ function Race () {
   
   let render;
   const [rank, setRank] = useState([])
+  let startHandler;
 
   useEffect(()=>{
     setTon(Number(1))//setTon(Number(state.ton || 1))
@@ -87,10 +90,29 @@ function Race () {
     render.options.background = '#2d2850'
     drawWorld()
     addBallsToWorld()
-    if (memberCountInRoom == 5)
-      engine.current.gravity.scale = 0.00065
-    else
-      engine.current.gravity.scale = 0
+    const values = ['2','1','Go']
+    let j = 0
+    let step = 1
+    const startHandlerInterval = setInterval(() => {
+      if (startHandler.position.y > 55)
+        step = -1
+      else if (startHandler.position.y < 35)
+        step = 1
+      Body.setPosition(startHandler,{x:startHandler.position.x, y:startHandler.position.y+step})
+      // Body.rotate(startHandler,step*0.01)
+     },20)
+    startHandler.collisionFilter.mask = 0x001
+    engine.current.gravity.scale = 0.0004
+    const startInterval = setInterval(() => {
+      setStartTitle(values[j++])
+      if (j > values.length){
+        clearInterval(startInterval)
+        if (memberCountInRoom == 5)
+          clearInterval(startHandlerInterval)
+          startHandler.collisionFilter.mask = 0x002
+      }
+    },1000)
+    
     handleCollisionEvent()
     
     var allBodies = Composite.allBodies(world);
@@ -182,8 +204,8 @@ function Race () {
   }
 
   const drawWorld = () => {
-    const wallOptions = {label: 'wall', isStatic: true,density: 0.8, restitution: 0.6, render:{fillStyle: '#8102FF'}, collisionFilter: {mask: 0x001}}
-    const wallOptionsBlack = {label: 'wall', isStatic: true,density: 0.8, restitution: 0.6, render:{fillStyle: '#111'}, collisionFilter: {mask: 0x001}}
+    const wallOptions = {label: 'wall', isStatic: true, render:{fillStyle: '#8102FF'}, collisionFilter: {mask: 0x001}}
+    const wallOptionsBlack = {label: 'wall', isStatic: true, render:{fillStyle: '#111'}, collisionFilter: {mask: 0x001}}
     
     const deg = Math.PI / 180
 
@@ -397,13 +419,14 @@ function Race () {
         Body.translate(body, { x: 0, y: -2 }, true);
       });
     }, 20);
-
+    startHandler = Bodies.rectangle(87*ratio, 43*ratio, 152*ratio, 6*ratio, {label: 'start', isStatic: true,density: 0.8, restitution: 0.6, render:{fillStyle: '#fff'}, collisionFilter: {mask: 0x002}})
+    add(startHandler)
+    
     add([
       Bodies.rectangle(cw / 2*ratio, ch+40*ratio, cw*ratio, 90*ratio, wallOptionsBlack),
       Bodies.rectangle(-35*ratio, ch / 2*ratio, 90*ratio, ch*ratio, wallOptionsBlack),
       Bodies.rectangle(cw+35*ratio, ch / 2*ratio, 90*ratio, ch*ratio, wallOptionsBlack),
       Bodies.rectangle(cw / 2*ratio, -40*ratio, cw*ratio, 81*ratio, wallOptionsBlack),
-      Bodies.rectangle(87*ratio, 43*ratio, 152*ratio, 6*ratio, {label: 'start', isStatic: true,density: 0.8, restitution: 0.6, render:{fillStyle: '#fff'}, collisionFilter: {mask: 0x002}}),
       Bodies.rectangle(172.5*ratio,256*ratio,9*ratio,512*ratio,wallOptionsBlack),
       Bodies.rectangle(88.5*ratio,603*ratio,177*ratio,100*ratio,wallOptionsBlack),
       Bodies.rectangle(194.5*ratio,343.5*ratio,9*ratio,609*ratio,wallOptionsBlack),
@@ -451,6 +474,7 @@ function Race () {
           color: user.color,
           userId:user.id,
           friction: 0.0001,
+          frictionAir: 0,
           density: 0.3,
           restitution: 0.8,
           isStatic:false,
@@ -460,7 +484,6 @@ function Race () {
       )
     );
     add(stack);
-    console.log(stack)
   };
 
   const handleCollisionEvent = () => {
@@ -507,7 +530,7 @@ function Race () {
   }
   
   return (
-    <div>
+    <div className='relative'>
       <div ref={scene} style={{width: '100%'}}/>
       <div>
         <div style={{position: 'absolute', top: '10px', left: '12px', color: 'white', display: 'flex', gap: '1em'}}>
@@ -530,6 +553,9 @@ function Race () {
             })}
           </div>
         )}
+      </div>
+      <div className='absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>
+        <span className='font-roboto font-bold text-white text-[72px]'>{startTitle}</span>
       </div>
     </div>
   );

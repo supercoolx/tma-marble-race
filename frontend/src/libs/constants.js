@@ -21,6 +21,7 @@ export const ROLE = {
 
 export const OWNER_ADDRESS = "UQADlThF2_zCkpo_MYhO7IXUeO31ooNLB_A_SMcZHdAKf5qk";
 export const IS_MAINNET = true;
+export const BASE_URL = "https://marble.pocketbotdev9.com"
 
 export const PLATFORM = {
     X: 'X',

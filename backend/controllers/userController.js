@@ -35,20 +35,18 @@ const getAllUserCount = async (req, res) => {
 const buyMarble = async (req, res) => {
   const {userid,price, balance} = req.body;
   const user = await User.findOne({userid});
-  if (user.tge < price){
-    res.status(StatusCodes.OK).json({success:false,msg:`You don't have enough @TGE to buy balance.`})
-  }else{
-    user.balance += balance;
-    user.tge -= price;
-    user.save()
-    res.status(StatusCodes.OK).json({success:true,user})
-  }
+  // res.status(StatusCodes.OK).json({success:false,msg:`You don't have enough @TGE to buy balance.`})
+  user.balance += balance;
+  user.tge = user.balance * 2;
+  user.save()
+  res.status(StatusCodes.OK).json({success:true,user})
 }
 
 const payMarble = async (req,res) => {
   const {userid,balance} = req.body;
   const user = await User.findOne({userid});
   user.balance -= balance;
+  user.tge = user.balance * 2;
   user.save()
   res.status(StatusCodes.OK).json({success:true,user})
 }
@@ -57,6 +55,7 @@ const winMarble = async (req,res) => {
   const {userid,balance} = req.body;
   const user = await User.findOne({userid});
   user.balance += balance;
+  user.tge = user.balance * 2;
   user.save()
   res.status(StatusCodes.OK).json({success:true,user})
 }
