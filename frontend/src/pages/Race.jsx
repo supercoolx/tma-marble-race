@@ -412,8 +412,8 @@ function Race () {
 
     //elevator
     let bodies = []
-    let cy = defaultHeight / 24
-    for(let i = 0; i < 24; i++){
+    let cy = defaultHeight / 15
+    for(let i = 0; i < 15; i++){
       bodies.push(Bodies.rectangle(186*ratio,cy*i*ratio,26*ratio,3*ratio,wallOptions))
     }
     
@@ -482,16 +482,16 @@ function Race () {
           index: i,
           color: user.color,
           userId:user.id,
-          friction: 0.0001,
+          friction: 0.00001,
           frictionAir: 0,
-          density: 0.9,
-          restitution: 0.6,
+          density: 0.5,
+          restitution: 0.9,
           isStatic:false,
           render: {fillStyle: user.color},
           collisionFilter: { mask: 0x001 }
         }
       )
-      Body.applyForce(body,{x:20*ratio,y:21*ratio},{x:0.35,y:0.35})
+      Body.applyForce(body,{x:20*ratio,y:21*ratio},{x:0.3,y:0.3})
       return body
     });
     add(stack);
