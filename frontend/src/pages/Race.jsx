@@ -428,7 +428,7 @@ function Race () {
         Body.translate(body, { x: 0, y: -2 }, true);
       });
     }, 20);
-    startHandler = Bodies.rectangle(87*ratio, 43*ratio, 152*ratio, 6*ratio, {label: 'start', isStatic: true,density: 0.8, restitution: 0.6, render:{fillStyle: '#fff'}, collisionFilter: {mask: 0x002}})
+    startHandler = Bodies.rectangle(87*ratio, 43*ratio, 162*ratio, 8*ratio, {label: 'start', isStatic: true,density: 0.8, restitution: 0.6, render:{fillStyle: '#fff'}, collisionFilter: {mask: 0x002}})
     add(startHandler)
     
     add([
@@ -472,8 +472,8 @@ function Race () {
 
 
   const addBallsToWorld = () => {
-    const stack = users.map((user, i) => 
-      Bodies.circle(
+    const stack = users.map((user, i) => {
+      const body = Bodies.circle(
         user.position.x*ratio,
         user.position.y*ratio,
         4.5*ratio,
@@ -491,7 +491,9 @@ function Race () {
           collisionFilter: { mask: 0x001 }
         }
       )
-    );
+      Body.applyForce(body,{x:20*ratio,y:21*ratio},{x:0.35,y:0.35})
+      return body
+    });
     add(stack);
   };
 
