@@ -218,7 +218,7 @@ function Rumble () {
       }
     })
     add(triangle1)
-    rotateHandle(triangle1)
+    // rotateHandle(triangle1)
     var triangleVertices = [
       { x: 0*ratio, y: 0*ratio }, // Top point
       { x: 90 * ratio, y: 0*ratio }, // Left point
@@ -241,6 +241,37 @@ function Rumble () {
       isStatic:true,
       render: {
         fillStyle: '#045AFF',
+        strokeStyle: '#045AFF',
+        lineWidth: 2
+      }
+    }))
+
+    // add(Bodies.rectangle(62.25*ratio,603.25*ratio,130.5*ratio, 21.5*ratio, wallOptions))
+
+
+    var triangleVertices = [
+      { x: 154.5*ratio, y: 569*ratio }, // Top point
+      { x: -100, y: defaultHeight*ratio }, // Left point
+      { x: 154.5 * ratio, y: defaultHeight*ratio }  // Right point
+    ];
+    add(Bodies.fromVertices(45.75*ratio,603.25*ratio,triangleVertices,{
+      isStatic:true,
+      render: {
+        fillStyle: 'transparent',
+        strokeStyle: '#045AFF',
+        lineWidth: 2
+      }
+    }))
+
+    var triangleVertices = [
+      { x: 232*ratio, y: 569*ratio }, // Top point
+      { x: 232*ratio, y: defaultHeight*ratio }, // Left point
+      { x: (defaultWidth+100) * ratio, y: defaultHeight*ratio }  // Right point
+    ];
+    add(Bodies.fromVertices(310.5*ratio,603.25*ratio,triangleVertices,{
+      isStatic:true,
+      render: {
+        fillStyle: 'transparent',
         strokeStyle: '#045AFF',
         lineWidth: 2
       }
@@ -409,7 +440,7 @@ function Rumble () {
             }
             temp=0;
           }
-          if (rank.length == 99 && temp != myCount){
+          if (rank.length == 99 && temp == myCount - 1){
             setWin(true)
             setFinish(true)
           }
