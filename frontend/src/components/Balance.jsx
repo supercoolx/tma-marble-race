@@ -3,7 +3,7 @@ import { useInitData } from '@telegram-apps/sdk-react';
 import API from '@/libs/api';
 import { useNavigate } from 'react-router-dom';
 
-export default function Balance({ reload }) {
+export default function Balance() {
     const navigate = useNavigate();
     const {user} = useInitData();
     const [balance, setBalance] = useState(0)
@@ -14,14 +14,14 @@ export default function Balance({ reload }) {
                 setBalance(res.data.balance)
                 setTge(res.data.tge)
             })
-    }, [user, reload])
+    }, [user])
 
     return (
         <div id="balance" className='ml-[23px] mt-[33px]'>
             <span className='font-roboto font-bold text-[#6E6E6E] text-[12px]'>Total balance</span>
             <div className=' flex flex-row items-center mt-[4px]'>
                 <img className='w-[17px] h-[17px]' src="/imgs/marble_ball.webp" alt=''/>
-                <span className='font-roboto ml-[8px] text-[#fff] text-[30px] font-bold'>{balance}</span>
+                <span id='score' className='font-roboto ml-[8px] text-[#fff] text-[30px] font-bold'>{balance}</span>
                 <div onClick={() => navigate('/buy')} className='ml-[10px] py-[6px] px-[12px] border-[2px] border-[#8102FF] rounded-[10.7px]'>
                     <svg className='w-[15px] h-[15px]' preserveAspectRatio="xMidYMid meet" data-bbox="29.5 29.5 141 141" viewBox="29.5 29.5 141 141" height="200" width="200" xmlns="http://www.w3.org/2000/svg" data-type="color" role="presentation" aria-hidden="true" aria-label="">
                         <g>
