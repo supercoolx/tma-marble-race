@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useInitData } from '@telegram-apps/sdk-react';
+import { beginCell } from 'ton-core';
 import Balance from '@/components/Balance';
 import Footer from '@/components/Footer';
 import API from '@/libs/api';
@@ -25,7 +26,18 @@ export default function Buy() {
         ])
     }, [])
 
+    const transactionComment = (text) => {
+        const cell = beginCell()
+            .storeUint(0x00000000, 32)
+            .storeStringTail(text)
+            .endCell();
+
+        const boc = cell.toBoc();
+        return boc.toString("base64");
+    };
+
     const handleBuy = (item) => (e) => {
+        
         e.preventDefault()
         if (!wallet) return toast.error("Connect your wallet!");
         if (IS_MAINNET && tonConnectUI?.wallet?.account.chain !== CHAIN.MAINNET) {
@@ -34,9 +46,14 @@ export default function Buy() {
         if (!IS_MAINNET && tonConnectUI?.wallet?.account.chain === CHAIN.MAINNET) {
             return toast.error("Connect your testnet wallet!");
         }
-
+        
         // const amount = (item.price * Math.pow(10, 9)).toString();
         const amount = (0.5 * 1e9);
+        const payload = transactionComment(JSON.stringify({
+            itemId: 'test',
+            userId: user.id,
+            value: item.value
+        }));
 
         tonConnectUI.sendTransaction({
             validUntil: Math.floor(Date.now() / 1000) + 60, // 60 sec
@@ -45,11 +62,7 @@ export default function Buy() {
                 {
                     address: OWNER_ADDRESS,
                     amount: amount.toString(),
-                    payload: JSON.stringify({
-                        itemId: 'test',
-                        userId: user.id,
-                        value: item.value
-                    })
+                    payload
                 }
             ]
         }).then(tx => {

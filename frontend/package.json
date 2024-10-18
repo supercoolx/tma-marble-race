@@ -30,7 +30,8 @@
     "react-countdown": "^2.3.6",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.26.2",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "ton-core": "^0.53.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",
