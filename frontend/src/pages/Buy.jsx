@@ -12,9 +12,9 @@ export default function Buy() {
     const { user } = useInitData();
     const wallet = useTonWallet();
     const [tonConnectUI,] = useTonConnectUI();
-
     const [items, setItems] = useState([]);
-    const [reloading, setReloading] = useState(false)
+    const [reload, setReload] = useState(false);
+
     useEffect(() => {
         API.get('/users/items').then(res => {
             if (res.data.success) {
@@ -68,7 +68,7 @@ export default function Buy() {
         }).then(res => {
             if (res.data.success) {
                 toast.success('Purchased successfully.');
-                setReloading(true)
+                setReload(prev => !prev);
             }
             else toast.error('Something went wrong!');
         });
@@ -76,7 +76,7 @@ export default function Buy() {
 
     return (
         <div className='flex flex-col pb-[85px]'>
-            <Balance reloading={reloading} setReloading={setReloading} />
+            <Balance reload={reload} />
             <div className="absolute top-3 right-3">
                 <TonConnectButton />
             </div>

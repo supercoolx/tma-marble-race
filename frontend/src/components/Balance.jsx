@@ -3,7 +3,7 @@ import { useInitData } from '@telegram-apps/sdk-react';
 import API from '@/libs/api';
 import { useNavigate } from 'react-router-dom';
 
-export default function Balance({reloading,setReloading}) {
+export default function Balance({ reload }) {
     const navigate = useNavigate();
     const {user} = useInitData();
     const [balance, setBalance] = useState(0)
@@ -14,18 +14,7 @@ export default function Balance({reloading,setReloading}) {
                 setBalance(res.data.balance)
                 setTge(res.data.tge)
             })
-    }, [user])
-
-    useEffect(() => {
-        if (reloading){
-            API.get(`/users/get/${user.id}`)
-            .then(res => {
-                setBalance(res.data.balance)
-                setTge(res.data.tge)
-                setReloading(false)
-            })
-        }
-    }, [reloading])
+    }, [user, reload])
 
     return (
         <div id="balance" className='ml-[23px] mt-[33px]'>

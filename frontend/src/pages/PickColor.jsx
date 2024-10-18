@@ -13,7 +13,6 @@ function PickColor () {
     const { state } = useLocation();
     const [price] = useState(Number(state.price)||1)
     const [balance, setBalance] = useState(0);
-    const [reloading, setReloading] = useState(false)
     const [ton, setTon] = useState(0);
     const [room, setRoom] = useState(0);
     const [memberCountInRoom, setMemberCountInRoom] = useState(0);
@@ -51,7 +50,6 @@ function PickColor () {
                 API.post('/users/payMarble',{userid:user.id,balance:price}).then(res=>{
                     if (res.data.success){
                         getUsersData()
-                        setReloading(true)
                     }
                 })
             }
@@ -92,7 +90,7 @@ function PickColor () {
 
     return(
         <div className='flex flex-col pb-[85px]'>
-            <Balance reloading={reloading} setReloading={setReloading}/>
+            <Balance/>
             <div id="body_buy">
                 <div id="header" className='text-center mt-[19px] mb-[15px]'>
                     <span className='font-roboto text-[#fff] text-[18px] font-bold'>Play Marble Ruble</span>
@@ -102,14 +100,14 @@ function PickColor () {
                         <div className='bg-black border-[#8102FF] border-[2px] rounded-[281px] w-[82px] h-[82px]'>                        </div>
                         <div className='flex flex-col justify-center'>
                             <span className='text-[11.5px] text-[#6E6E6E]'>Price 1 Marble</span>
-                            <div className='flex flex-row justify-center items-center mt-2'>
+                            <div className='flex flex-row items-center justify-center mt-2'>
                                 <img className='w-[13px] h-[13px]' src="/imgs/marble_ball.webp" alt=''/>
                                 <span className='text-[15px] text-[#fff] ml-1 font-bold'>{price}</span>
                             </div>
                         </div>
                         <div className='flex flex-col justify-center'>
                             <span className='text-[11.5px] text-[#6E6E6E]'>Winner Prize</span>
-                            <div className='flex flex-row justify-center items-center mt-2'>
+                            <div className='flex flex-row items-center justify-center mt-2'>
                                 <img className='w-[13px] h-[13px]' src="/imgs/marble_ball.webp" alt=''/>
                                 <span className='text-[15px] text-[#fff] ml-1 font-bold'>{price*100}</span>
                             </div>
