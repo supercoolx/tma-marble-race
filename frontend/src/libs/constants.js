@@ -4,7 +4,7 @@ export const MINER_STATUS = {
 }
 
 export const LINK = {
-    TELEGRAM_MINIAPP: 'https://t.me/supercool_marble_bot',
+    TELEGRAM_MINIAPP: 'https://t.me/marble_game_bot',
     TELEGRAM_GROUP: 'https://t.me/tonredonion_onon',
     TELEGRAM_CHANNEL: 'https://t.me/MARBLE_ANNOUNCEMENT',
     X: 'https://x.com/marblesprint',
