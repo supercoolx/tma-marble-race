@@ -13,6 +13,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@ton/ton": "^15.1.0",
+    "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "concurrently": "^9.0.1",
     "dotenv": "^16.4.5",

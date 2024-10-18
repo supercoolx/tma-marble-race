@@ -1,14 +1,16 @@
 const fs = require('fs');
 const path = require('path');
-
 const { StatusCodes } = require('http-status-codes');
+
 
 const User = require('../models/User');
 const Follow = require('../models/Follow');
+const Transaction = require('../models/Transaction');
 
 const logger = require('../helper/logger');
 const { BONUS, TELEGRAM, LEADERBOARD_SHOW_USER_COUNT } = require('../helper/constants');
 const { isUserTGJoined } = require('../helper/botHelper');
+const cronJob = require('../cron/transactions');
 
 const getUser = async (req, res) => {
   const { userid } = req.params;
@@ -33,12 +35,27 @@ const getAllUserCount = async (req, res) => {
 };
 
 const buyMarble = async (req, res) => {
-  const {userid,price, balance} = req.body;
+  const {userid, address, balance, amount} = req.body;
   const user = await User.findOne({userid});
-  // res.status(StatusCodes.OK).json({success:false,msg:`You don't have enough @TGE to buy balance.`})
+  if (!user) return res.status(StatusCodes.OK).json({success: false, status: 'nouser', msg: 'There is no userid!'});
+
+  await cronJob.run();
+
+  const transaction = await Transaction.findOne({
+    from: address,
+    amount: amount,
+    claimed: false,
+  });
+
+  if (!transaction) return res.status(StatusCodes.OK).json({success: false, status: 'notx', msg: 'Verification failed!'});
+
+  transaction.claimed = true;
+  await transaction.save();
+
   user.balance += balance;
   user.tge = user.balance * 2;
-  user.save()
+  await user.save();
+  
   res.status(StatusCodes.OK).json({success:true,user})
 }
 

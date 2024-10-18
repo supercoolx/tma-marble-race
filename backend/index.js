@@ -6,6 +6,7 @@ const path = require('path');
 
 // database
 const connectDB = require('./db/connect');
+const cronJob = require('./cron/transactions');
 
 //  routers
 const authRouter = require('./routes/authRoutes');
@@ -37,3 +38,4 @@ const start = async () => {
 };
 
 start();
+cronJob.start();
