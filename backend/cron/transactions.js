@@ -30,9 +30,9 @@ const run = async () => {
                         amount: tx.in_msg.value,
                     });
 
-                    if (tx.in_msg.decoded_body) {
-                        transaction.payload = tx.in_msg.decoded_body.text;
-                        let payload = JSON.parse(tx.in_msg.decoded_body.text);
+                    if (tx.in_msg?.decoded_body?.text) {
+                        transaction.payload = tx.in_msg.decoded_body.text ?? '';
+                        let payload = JSON.parse(transaction.payload);
                         if (payload) {
                             transaction.userid = payload.userid;
                             transaction.itemid = payload.itemid;
@@ -51,20 +51,8 @@ const run = async () => {
                             console.log(`${user.firstname} purchased ${item.itemid}.`);
 
                             let bonus = Math.floor(item.balance / 10);
-                            await User.findOneAndUpdate(
-                                {
-                                    friends: {
-                                        $elemMatch: {
-                                            userid: friendId
-                                        }
-                                    }
-                                },
-                                {
-                                    $inc: {
-                                        balance: bonus
-                                    }
-                                }
-                            );
+
+                            await User.findOneAndUpdate({ friends: user._id }, { $inc: { balance: bonus } });
                         }
 
                     }
