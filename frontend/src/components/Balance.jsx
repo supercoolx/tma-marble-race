@@ -22,8 +22,8 @@ export default function Balance({reloading,setReloading}) {
             .then(res => {
                 setBalance(res.data.balance)
                 setTge(res.data.tge)
+                setReloading(false)
             })
-            setReloading(false)
         }
     }, [reloading])
 
