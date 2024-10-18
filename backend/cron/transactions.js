@@ -1,6 +1,9 @@
 const cron = require('node-cron');
 
 const fetchTransactions = require('./fetch');
+
+const User = require('../models/User');
+const Item = require('../models/Item');
 const Transaction = require('../models/Transaction');
 
 const task = {
@@ -9,7 +12,7 @@ const task = {
 
 const run = async () => {
     try {
-        var after_lt = 0, before_lt = null;
+        var after_lt = 0;
         const latestTx = await Transaction.find({}).sort({ lt: -1 });
         if (latestTx.length > 0) after_lt = latestTx.lt;
 
@@ -18,7 +21,7 @@ const run = async () => {
             for (const tx of data.transactions) {
                 let tmp = await Transaction.findOne({ hash: tx.hash });
                 if (tmp === null && tx.in_msg.value > 0) {
-                    await Transaction.create({
+                    let transaction = new Transaction({
                         hash: tx.hash,
                         lt: tx.lt,
                         utime: tx.utime,
@@ -26,6 +29,30 @@ const run = async () => {
                         to: tx.in_msg.destination.address,
                         amount: tx.in_msg.value,
                     });
+
+                    if (tx.in_msg.decoded_body) {
+                        transaction.payload = tx.in_msg.decoded_body.text;
+                        let payload = JSON.parse(tx.in_msg.decoded_body.text);
+                        if (payload) {
+                            transaction.userid = payload.userid;
+                            transaction.itemid = payload.itemid;
+                        }
+                        await transaction.save();
+
+                        if (payload) {
+                            let user = await User.findOne({ userid: payload.userid });
+                            if (!user) continue;
+                            let item = await Item.findOne({ itemid: payload.itemid });
+                            if (!item) continue;
+
+                            user.balance += item.balance;
+                            await user.save();
+                            
+                            console.log(`${user.firstname} purchased ${item.itemid}.`);
+                        }
+
+                    }
+
                 }
             }
             after_lt = data.transactions[0].lt;
@@ -33,8 +60,11 @@ const run = async () => {
         }
 
         task.isFetching = false;
+
+        return true;
     } catch (error) {
         console.error('Ooops! Cron job error:', error);
+        return false;
     }
 }
 

@@ -20,6 +20,8 @@ const {
 
     getAvatarImage,
     claimDailyReward,
+
+    getItems,
     buyMarble,
     payMarble,
     winMarble
@@ -30,6 +32,7 @@ router.get('/friends/:userid', authenticateUser, getAllFriends);
 router.get('/ranking/:userid/:type', authenticateUser, getLeaderboard);
 router.get('/count/all', authenticateUser, getAllUserCount);
 
+router.get('/items',authenticateUser, getItems);
 router.post('/buyMarble',authenticateUser, buyMarble);
 router.post('/payMarble',authenticateUser,payMarble);
 router.post('/winMarble',authenticateUser,winMarble);

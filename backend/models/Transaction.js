@@ -8,7 +8,9 @@ const TransactionSchema = new mongoose.Schema({
     from: { type: String },
     to: { type: String },
     amount: { type: Number },
-    claimed: { type: Boolean, default: false }
+    userid: { type: String, default: '' },
+    itemid: { type: String, default: '' },
+    payload: { type: String, default: '' },
 });
 
 module.exports = mongoose.model('Transaction', TransactionSchema);

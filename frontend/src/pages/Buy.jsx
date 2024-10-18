@@ -16,15 +16,12 @@ export default function Buy() {
     const [items, setItems] = useState([]);
     const [reloading, setReloading] = useState(false)
     useEffect(() => {
-        setItems([
-            { value: 20, price: 20 },
-            { value: 105, crossValue: 100, price: 100 },
-            { value: 270, crossValue: 250, price: 250 },
-            { value: 550, crossValue: 500, price: 500 },
-            { value: 1200, crossValue: 1000, price: 1000 },
-            { value: 6500, crossValue: 5000, price: 5000 }
-        ])
-    }, [])
+        API.get('/users/items').then(res => {
+            if (res.data.success) {
+                setItems(res.data.items);
+            }
+        });
+    }, []);
 
     const transactionComment = (text) => {
         const cell = beginCell()
@@ -48,11 +45,10 @@ export default function Buy() {
         }
         
         // const amount = (item.price * Math.pow(10, 9)).toString();
-        const amount = (0.5 * 1e9);
+        const amount = item.price * 1e9;
         const payload = transactionComment(JSON.stringify({
-            itemId: 'test',
-            userId: user.id,
-            value: item.value
+            itemid: item.itemid,
+            userid: user.id,
         }));
 
         tonConnectUI.sendTransaction({
@@ -68,20 +64,14 @@ export default function Buy() {
         }).then(tx => {
             console.log('Transaction sent successfully. Wait for a while verification.');
             console.log('Transaction success:', tx);
-            return API.post('/users/buyMarble', {
-                userid: user.id,
-                address: wallet.account.address,
-                balance: item.value,
-                amount
-            });
+            return API.post('/users/buyMarble', { userid: user.id });
         }).then(res => {
             if (res.data.success) {
                 toast.success('Purchased successfully.');
                 setReloading(true)
             }
-            else
-                toast(res.data.msg)
-        })
+            else toast.error('Something went wrong!');
+        });
     }
 
     return (
@@ -99,8 +89,8 @@ export default function Buy() {
                         <div key={index} onClick={handleBuy(item)} className='flex flex-col cursor-pointer'>
                             <div className='flex flex-col items-center bg-[#1B1A21] rounded-tl-[12.8px] rounded-tr-[12.8px] border-[#6E6E6E] border-[1px] pt-[10px] pb-[8px]'>
                                 <div>
-                                    <span className='font-roboto text-[21px] text-[#fff] font-bold'>{item.value}</span>
-                                    <span className='font-roboto text-[21px] text-[#6E6E6E] font-bold ml-1 line-through'>{item.crossValue}</span>
+                                    <span className='font-roboto text-[21px] text-[#fff] font-bold'>{item.balance }</span>
+                                    <span className='font-roboto text-[21px] text-[#6E6E6E] font-bold ml-1 line-through'>{item.lastBalance || ''}</span>
                                 </div>
                                 <img className='w-[35px] h-[35px]' src="/imgs/marble_ball.webp" alt='' />
                             </div>
