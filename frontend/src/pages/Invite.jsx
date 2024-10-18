@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useInitData } from "@telegram-apps/sdk-react";
+import { useInitData, useUtils } from "@telegram-apps/sdk-react";
 import API from "@/libs/api";
 import Balance from '@/components/Balance';
 import Footer from '@/components/Footer';
-import { BASE_URL, LINK } from '@/libs/constants';
+import { LINK } from '@/libs/constants';
 
 export default function Invite() {
     const { user } = useInitData();
+    const utils = useUtils();
     const [friends, setFriends] = useState([]);
     const [userid, setUserid] = useState(null);
     const [url, setUrl] = useState('')
@@ -21,9 +22,7 @@ export default function Invite() {
             })
 
         const link = `${LINK.TELEGRAM_MINIAPP}?start=${user.id}`;
-        const shareText = 'Join our telegram mini app.';
-        const invite_fullUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(shareText)}`;
-        setUrl(invite_fullUrl);
+        setUrl(link);
     }, [user]);
 
     const handleInviteLinkCopyButton = (e) => {
@@ -33,6 +32,12 @@ export default function Invite() {
             .then(() => textElement.innerText = 'Copied')
             .then(() => setTimeout(() => { textElement.innerText = 'Copy'; }, 2000))
             .catch();
+    }
+
+    const handleClickInvite = () => {
+        const shareText = "Join our marble game.";
+        const invite_fullUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(shareText)}`;
+        utils.openTelegramLink(invite_fullUrl);
     }
 
     return (
@@ -51,7 +56,7 @@ export default function Invite() {
                     <div className='flex flex-col bg-[#1B1A21] rounded-[11px] px-4 py-[10px] mt-1 border border-white/20'>
                         <div className='flex flex-row items-center justify-between gap-3'>
                             <div className="flex-1">
-                                <input type="text" className='w-full text-sm font-bold text-white bg-transparent outline-none font-roboto' value={url} readOnly />
+                                <input type="text" onClick={handleClickInvite} className='w-full text-sm font-bold text-white bg-transparent outline-none cursor-pointer font-roboto' value={url} readOnly />
                             </div>
                             <div onClick={handleInviteLinkCopyButton} className='px-[16px] py-[4px] text-center flex flex-row items-center border-[#8102FF] rounded-[5px] border-[1px] cursor-pointer'>
                                 <span id="copy_button_text" className='font-roboto text-[11.4px] text-white font-bold'>Copy</span>

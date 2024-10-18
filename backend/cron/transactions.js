@@ -47,8 +47,24 @@ const run = async () => {
 
                             user.balance += item.balance;
                             await user.save();
-                            
+
                             console.log(`${user.firstname} purchased ${item.itemid}.`);
+
+                            let bonus = Math.floor(item.balance / 10);
+                            await User.findOneAndUpdate(
+                                {
+                                    friends: {
+                                        $elemMatch: {
+                                            userid: friendId
+                                        }
+                                    }
+                                },
+                                {
+                                    $inc: {
+                                        balance: bonus
+                                    }
+                                }
+                            );
                         }
 
                     }
