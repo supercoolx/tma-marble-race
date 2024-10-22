@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useInitData } from '@telegram-apps/sdk-react';
 import { beginCell } from 'ton-core';
-import Balance from '@/components/Balance';
-import Footer from '@/components/Footer';
 import API from '@/libs/api';
 import { toast } from 'react-toastify';
 import { useTonWallet, useTonConnectUI, TonConnectButton, CHAIN } from '@tonconnect/ui-react';
@@ -74,8 +72,7 @@ export default function Buy() {
     }
 
     return (
-        <div className='flex flex-col pb-[85px]'>
-            <Balance />
+        <div>
             <div className="absolute top-3 right-3">
                 <TonConnectButton />
             </div>
@@ -100,7 +97,6 @@ export default function Buy() {
                     ))}
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }
