@@ -42,14 +42,14 @@ export function App() {
     <AppRoot appearance={miniApp.isDark ? 'dark' : 'light'} platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'} >
       <Router location={location} navigator={reactNavigator}>
         <AuthProvider>
-          <div className='flex flex-col pb-[85px]'>
-            <Balance/>
+          <div className='flex flex-col'>
+            {!(location.pathname === "/rumble" || location.pathname === "/race") && <Balance/>}
             <Routes>
               {routes.map((route) => <Route key={route.path} {...route} />)}
               <Route path='*' element={<Navigate to='/' />} />
             </Routes>
           </div>
-          <Footer/>
+          {!(location.pathname === "/rumble" || location.pathname === "/race") && <Footer/>}
         </AuthProvider>
       </Router>
       <ToastContainer position="top-center" autoClose={1000} theme={miniApp.isDark ? 'dark' : 'light'} />

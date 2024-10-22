@@ -10,7 +10,7 @@ function RaceMenu () {
     }
 
     return(
-        <div id="body_race_menu">
+        <div id="body_race_menu" className='pb-[85px]'>
             <div id="header" className='text-center mt-[19px] mb-[15px]'>
                 <span className='font-roboto text-[#fff] text-[18px] font-bold'>Play Marble Race</span>
             </div>
